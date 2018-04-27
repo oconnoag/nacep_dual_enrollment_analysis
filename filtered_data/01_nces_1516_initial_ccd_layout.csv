@@ -28,6 +28,8 @@ N = Not applicable
 VIRTUAL,Virtual School Status,"Missing
 No
 Yes"
+GSLO,Lowest Grade Offered,
+GSHI,Highest Grade Offered,
 combokey,nces + schid unique identifier,
 NMCNTY15,County Code,
 LOCALE15,Locale Code,
