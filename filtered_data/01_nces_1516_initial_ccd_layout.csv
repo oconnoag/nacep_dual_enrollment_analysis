@@ -1,0 +1,35 @@
+﻿Variable Name,Description,Categorical Values
+LEAID,NCES Agency Identification Number,
+SCHID,NCES school identifier,
+SCH_NAME,School name,
+TITLEI,Title I Eligible School. This flag indicates whether a school is eligible for participation in either TAS or SWP program authorized by Title I of Public Law 103-382. ,"No
+Yes
+Missing
+Not applicable
+-9-Suppressed"
+SCH_TYPE_TEXT,School type (description),"Alternative Education School
+Regular School
+Special Education School
+Vocational Education School
+"
+SCH_TYPE,School type (code),"1 = Regular school
+2 = Special education school
+3 = Vocational school
+4 = Other/alternative school
+5 = Reportable program (new code starting in 2007–08)
+"
+LEVEL,School level,"1 = Primary (low grade = PK through 03; high grade = PK through 08)
+2 = Middle (low grade = 04 through 07; high grade = 04 through 09)
+3 = High (low grade = 07 through 12; high grade = 12 only)
+4 = Other (any other configuration not falling within the above three categories;including ungraded)
+N = Not applicable
+
+"
+VIRTUAL,Virtual School Status,"Missing
+No
+Yes"
+combokey,nces + schid unique identifier,
+NMCNTY15,County Code,
+LOCALE15,Locale Code,
+LAT1516,Latitude,
+LON1516,Longitutde,

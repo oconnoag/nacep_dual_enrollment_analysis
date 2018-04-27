@@ -1,0 +1,112 @@
+﻿Field_Name,Field_Description,Module
+LEA_STATE,District State Abbreviation,Identification
+LEA_STATE_NAME,District State Name,Identification
+LEAID,7 Digit LEAID District Identification Code,Identification
+LEA_NAME,District Name,Identification
+SCHID,5 Digit School Identification Code,Identification
+SCH_NAME,School Name,Identification
+COMBOKEY,7 Digit LEAID District Identification Code+5 Digit School Identification Code,Identification
+JJ,"Juvenile Justice Facility: ""Yes"" indicates a long-term secure facility; ""No"" indicates not a JJ facility",Identification
+SCH_GRADE_PS,Grades with Students Enrolled: Preschool,School Characteristics
+SCH_GRADE_KG,Grades with Students Enrolled: Kindergarten,School Characteristics
+SCH_GRADE_G01,Grades with Students Enrolled: Grade 1,School Characteristics
+SCH_GRADE_G02,Grades with Students Enrolled: Grade 2,School Characteristics
+SCH_GRADE_G03,Grades with Students Enrolled: Grade 3,School Characteristics
+SCH_GRADE_G04,Grades with Students Enrolled: Grade 4,School Characteristics
+SCH_GRADE_G05,Grades with Students Enrolled: Grade 5,School Characteristics
+SCH_GRADE_G06,Grades with Students Enrolled: Grade 6,School Characteristics
+SCH_GRADE_G07,Grades with Students Enrolled: Grade 7,School Characteristics
+SCH_GRADE_G08,Grades with Students Enrolled: Grade 8,School Characteristics
+SCH_GRADE_G09,Grades with Students Enrolled: Grade 9,School Characteristics
+SCH_GRADE_G10,Grades with Students Enrolled: Grade 10,School Characteristics
+SCH_GRADE_G11,Grades with Students Enrolled: Grade 11,School Characteristics
+SCH_GRADE_G12,Grades with Students Enrolled: Grade 12,School Characteristics
+SCH_GRADE_UG,Grades with Students Enrolled: Ungraded,School Characteristics
+SCH_UGDETAIL_HS,Ungraded Detail: High school age students,School Characteristics
+SCH_STATUS_SPED,School Characteristics: Special education school,School Characteristics
+SCH_STATUS_MAGNET,School Characteristics: Magnet school or school operating a magnet program within the school,School Characteristics
+SCH_STATUS_CHARTER,School Characteristics: Charter school,School Characteristics
+SCH_STATUS_ALT,School Characteristics: Alternative school,School Characteristics
+SCH_ENR_HI_M,Overall Student Enrollment: Hispanic Male,Enrollment
+SCH_ENR_HI_F,Overall Student Enrollment: Hispanic Female,Enrollment
+SCH_ENR_AM_M,Overall Student Enrollment: American Indian/Alaska Native Male,Enrollment
+SCH_ENR_AM_F,Overall Student Enrollment: American Indian/Alaska Native Female,Enrollment
+SCH_ENR_AS_M,Overall Student Enrollment: Asian Male,Enrollment
+SCH_ENR_AS_F,Overall Student Enrollment: Asian Female,Enrollment
+SCH_ENR_HP_M,Overall Student Enrollment: Native Hawaiian/Pacific Islander Male,Enrollment
+SCH_ENR_HP_F,Overall Student Enrollment: Native Hawaiian/Pacific Islander Female,Enrollment
+SCH_ENR_BL_M,Overall Student Enrollment: Black Male,Enrollment
+SCH_ENR_BL_F,Overall Student Enrollment: Black Female,Enrollment
+SCH_ENR_WH_M,Overall Student Enrollment: White Male,Enrollment
+SCH_ENR_WH_F,Overall Student Enrollment: White Female,Enrollment
+SCH_ENR_TR_M,Overall Student Enrollment: Two or More Races Male,Enrollment
+SCH_ENR_TR_F,Overall Student Enrollment: Two or More Races Female,Enrollment
+TOT_ENR_M,Overall Student Enrollment: Calculated Male Total,Enrollment
+TOT_ENR_F,Overall Student Enrollment: Calculated Female Total,Enrollment
+SCH_ENR_LEP_M,Overall Student Enrollment: LEP Male,Enrollment
+SCH_ENR_LEP_F,Overall Student Enrollment: LEP Female,Enrollment
+SCH_ENR_IDEA_M,Overall Student Enrollment: IDEA Male,Enrollment
+SCH_ENR_IDEA_F,Overall Student Enrollment: IDEA Female,Enrollment
+SCH_DUAL_IND,Dual Enrollment Program Indicator,Dual Enrollment
+SCH_DUALENR_HI_M,Dual Enrollment: Hispanic Male,Dual Enrollment
+SCH_DUALENR_HI_F,Dual Enrollment: Hispanic Female,Dual Enrollment
+SCH_DUALENR_AM_M,Dual Enrollment: American Indian/Alaska Native Male,Dual Enrollment
+SCH_DUALENR_AM_F,Dual Enrollment: American Indian/Alaska Native Female,Dual Enrollment
+SCH_DUALENR_AS_M,Dual Enrollment: Asian Male,Dual Enrollment
+SCH_DUALENR_AS_F,Dual Enrollment: Asian Female,Dual Enrollment
+SCH_DUALENR_HP_M,Dual Enrollment: Native Hawaiian/Pacific Islander Male,Dual Enrollment
+SCH_DUALENR_HP_F,Dual Enrollment: Native Hawaiian/Pacific Islander Female,Dual Enrollment
+SCH_DUALENR_BL_M,Dual Enrollment: Black Male,Dual Enrollment
+SCH_DUALENR_BL_F,Dual Enrollment: Black Female,Dual Enrollment
+SCH_DUALENR_WH_M,Dual Enrollment: White Male,Dual Enrollment
+SCH_DUALENR_WH_F,Dual Enrollment: White Female,Dual Enrollment
+SCH_DUALENR_TR_M,Dual Enrollment: Two or More Races Male,Dual Enrollment
+SCH_DUALENR_TR_F,Dual Enrollment: Two or More Races Female,Dual Enrollment
+TOT_DUAL_M,Dual Enrollment: Calculated Male Total,Dual Enrollment
+TOT_DUAL_F,Dual Enrollment: Calculated Female Total,Dual Enrollment
+SCH_DUALENR_LEP_M,Dual Enrollment: LEP Male,Dual Enrollment
+SCH_DUALENR_LEP_F,Dual Enrollment: LEP Female,Dual Enrollment
+SCH_DUALENR_IDEA_M,Dual Enrollment: IDEA Male,Dual Enrollment
+SCH_DUALENR_IDEA_F,Dual Enrollment: IDEA Female,Dual Enrollment
+SCH_APENR_IND,Advanced Placement (AP) Program Indicator: Does this school have any students enrolled in Advanced Placement (AP) courses?,Advanced Placement
+SCH_APENR_HI_M,Students Enrolled in at least one AP Course: Hispanic Male,Advanced Placement
+SCH_APENR_HI_F,Students Enrolled in at least one AP Course: Hispanic Female,Advanced Placement
+SCH_APENR_AM_M,Students Enrolled in at least one AP Course: American Indian/Alaska Native Male,Advanced Placement
+SCH_APENR_AM_F,Students Enrolled in at least one AP Course: American Indian/Alaska Native Female,Advanced Placement
+SCH_APENR_AS_M,Students Enrolled in at least one AP Course: Asian Male,Advanced Placement
+SCH_APENR_AS_F,Students Enrolled in at least one AP Course: Asian Female,Advanced Placement
+SCH_APENR_HP_M,Students Enrolled in at least one AP Course: Native Hawaiian/Pacific Islander Male,Advanced Placement
+SCH_APENR_HP_F,Students Enrolled in at least one AP Course: Native Hawaiian/Pacific Islander Female,Advanced Placement
+SCH_APENR_BL_M,Students Enrolled in at least one AP Course: Black Male,Advanced Placement
+SCH_APENR_BL_F,Students Enrolled in at least one AP Course: Black Female,Advanced Placement
+SCH_APENR_WH_M,Students Enrolled in at least one AP Course: White Male,Advanced Placement
+SCH_APENR_WH_F,Students Enrolled in at least one AP Course: White Female,Advanced Placement
+SCH_APENR_TR_M,Students Enrolled in at least one AP Course: Two or More Races Male,Advanced Placement
+SCH_APENR_TR_F,Students Enrolled in at least one AP Course: Two or More Races Female,Advanced Placement
+TOT_APENR_M,Students Enrolled in at least one AP Course: Calculated Male Total,Advanced Placement
+TOT_APENR_F,Students Enrolled in at least one AP Course: Calculated Female Total,Advanced Placement
+SCH_APENR_LEP_M,Students Enrolled in at least one AP Course: LEP Male,Advanced Placement
+SCH_APENR_LEP_F,Students Enrolled in at least one AP Course: LEP Female,Advanced Placement
+SCH_APENR_IDEA_M,Students Enrolled in at least one AP Course: IDEA Male,Advanced Placement
+SCH_APENR_IDEA_F,Students Enrolled in at least one AP Course: IDEA Female,Advanced Placement
+SCH_IBENR_IND,International Baccalaureate Diploma Programme Indicator,International Baccalaureate
+SCH_IBENR_HI_M,IB Student Enrollment: Hispanic Male,International Baccalaureate
+SCH_IBENR_HI_F,IB Student Enrollment: Hispanic Female,International Baccalaureate
+SCH_IBENR_AM_M,IB Student Enrollment: American Indian/Alaska Native Male,International Baccalaureate
+SCH_IBENR_AM_F,IB Student Enrollment: American Indian/Alaska Native Female,International Baccalaureate
+SCH_IBENR_AS_M,IB Student Enrollment: Asian Male,International Baccalaureate
+SCH_IBENR_AS_F,IB Student Enrollment: Asian Female,International Baccalaureate
+SCH_IBENR_HP_M,IB Student Enrollment: Native Hawaiian/Pacific Islander Male,International Baccalaureate
+SCH_IBENR_HP_F,IB Student Enrollment: Native Hawaiian/Pacific Islander Female,International Baccalaureate
+SCH_IBENR_BL_M,IB Student Enrollment: Black Male,International Baccalaureate
+SCH_IBENR_BL_F,IB Student Enrollment: Black Female,International Baccalaureate
+SCH_IBENR_WH_M,IB Student Enrollment: White Male,International Baccalaureate
+SCH_IBENR_WH_F,IB Student Enrollment: White Female,International Baccalaureate
+SCH_IBENR_TR_M,IB Student Enrollment: Two or More Races Male,International Baccalaureate
+SCH_IBENR_TR_F,IB Student Enrollment: Two or More Races Female,International Baccalaureate
+TOT_IBENR_M,IB Student Enrollment: Calculated Male Total,International Baccalaureate
+TOT_IBENR_F,IB Student Enrollment: Calculated Female Total,International Baccalaureate
+SCH_IBENR_LEP_M,IB Student Enrollment: LEP Male,International Baccalaureate
+SCH_IBENR_LEP_F,IB Student Enrollment: LEP Female,International Baccalaureate
+SCH_IBENR_IDEA_M,IB Student Enrollment: IDEA Male,International Baccalaureate
+SCH_IBENR_IDEA_F,IB Student Enrollment: IDEA Female,International Baccalaureate
