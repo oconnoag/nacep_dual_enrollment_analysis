@@ -1,6 +1,8 @@
 ﻿Variable Name,Description,Categorical Values
 LEAID,NCES Agency Identification Number,
+LEA_NAME,LEA Name,
 SCHID,NCES school identifier,
+STABR,State Abreviation,
 SCH_NAME,School name,
 TITLEI,Title I Eligible School. This flag indicates whether a school is eligible for participation in either TAS or SWP program authorized by Title I of Public Law 103-382. ,"No
 Yes
