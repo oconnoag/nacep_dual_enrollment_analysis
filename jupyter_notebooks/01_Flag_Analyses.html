@@ -11817,7 +11817,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../filtered_data/04_inital_filter.csv&#39;</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;LEAID&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">})</span>
@@ -11830,7 +11830,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
@@ -11846,7 +11846,7 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[11]:</div>
+<div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -11915,14 +11915,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_breakdown</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">de_breakdown</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 <span class="n">de_pct</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">de_breakdown</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">de_breakdown</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">de_breakdown</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">pct</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; percent of schools in this dataset reported that they offered dual enrollment in 2013-2014.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">de_pct</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; percent of schools in this dataset reported that they offered dual enrollment in 2013-2014.&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11964,7 +11964,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ap_breakdown</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -12013,7 +12013,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ib_breakdown</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;SCH_IBENR_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -12062,7 +12062,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[163]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_only</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">[(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_IBENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -12079,7 +12079,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[163]:</div>
+<div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -12105,7 +12105,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[165]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ap_only</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">[(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_IBENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -12122,7 +12122,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[165]:</div>
+<div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -12148,7 +12148,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[166]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ib_only</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">[(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_IBENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -12165,7 +12165,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[166]:</div>
+<div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -12191,7 +12191,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[167]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">one_or_more</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">[((</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_IBENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">))</span> <span class="o">|</span>
@@ -12211,7 +12211,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[167]:</div>
+<div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -12237,7 +12237,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[168]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">none</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">[(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_IBENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -12254,7 +12254,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[168]:</div>
+<div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -12271,7 +12271,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[169]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Are all schools accounted for?&quot;&quot;&quot;</span>
@@ -12288,7 +12288,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[169]:</div>
+<div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -12307,13 +12307,56 @@ Name: LEAID, dtype: int64
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><strong> AP or IB </strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ap_or_ib</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">[(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_IBENR_IND&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Yes&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">ap_or_ib</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[13]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>11592</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="By-State">By State<a class="anchor-link" href="#By-State">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_by_state</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -12328,7 +12371,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[99]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">de_by_state</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;No&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;pct&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
@@ -12744,7 +12787,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[139]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;choropleth&#39;</span><span class="p">,</span>
@@ -12773,7 +12816,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[140]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_layout</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;2015-2016 DE-Offered Percentages&#39;</span><span class="p">,</span>
@@ -12787,7 +12830,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[141]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_choromap</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">de_data</span><span class="p">],</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">de_layout</span><span class="p">)</span>
@@ -12800,7 +12843,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[142]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">iplot</span><span class="p">(</span><span class="n">de_choromap</span><span class="p">)</span>
@@ -12822,7 +12865,7 @@ Name: LEAID, dtype: int64
 
 
 <div class="output_html rendered_html output_subarea ">
-<div id="36ddbef9-7ae5-4561-99da-1b78b923d9b2" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("36ddbef9-7ae5-4561-99da-1b78b923d9b2", [{"type": "choropleth", "locations": ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"], "locationmode": "USA-states", "colorscale": [[0.0, "rgb(255,255,255)"], [0.2, "rgb(255,221,221)"], [0.4, "rgb(255, 200, 200)"], [0.8, "rgb(255, 50, 50)"], [1.0, "rgb(180,0,0)"]], "reversescale": false, "text": ["Home #1", "Home #2", "Home #3"], "z": [0.68, 0.84, 0.77, 0.5, 0.34, 0.81, 0.65, 0.25, 0.63, 0.91, 0.92, 0.97, 0.98, 0.92, 0.78, 0.86, 0.84, 0.85, 0.87, 0.46, 0.89, 0.64, 0.84, 0.7, 0.92, 0.81, 0.59, 0.74, 0.86, 0.85, 0.6, 0.65, 0.89, 0.46, 0.47, 0.77, 0.69, 0.72, 0.66, 0.55, 0.96, 0.84, 0.81, 0.89, 0.82, 0.9, 0.95, 0.68, 0.79, 0.74, 0.79]}], {"title": "2015-2016 DE-Offered Percentages", "geo": {"scope": "usa"}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
+<div id="c1f351f1-2543-4081-aa04-3283a978dcaa" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("c1f351f1-2543-4081-aa04-3283a978dcaa", [{"type": "choropleth", "locations": ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"], "locationmode": "USA-states", "colorscale": [[0.0, "rgb(255,255,255)"], [0.2, "rgb(255,221,221)"], [0.4, "rgb(255, 200, 200)"], [0.8, "rgb(255, 50, 50)"], [1.0, "rgb(180,0,0)"]], "reversescale": false, "text": ["Home #1", "Home #2", "Home #3"], "z": [0.68, 0.84, 0.77, 0.5, 0.34, 0.81, 0.65, 0.25, 0.63, 0.91, 0.92, 0.97, 0.98, 0.92, 0.78, 0.86, 0.84, 0.85, 0.87, 0.46, 0.89, 0.64, 0.84, 0.7, 0.92, 0.81, 0.59, 0.74, 0.86, 0.85, 0.6, 0.65, 0.89, 0.46, 0.47, 0.77, 0.69, 0.72, 0.66, 0.55, 0.96, 0.84, 0.81, 0.89, 0.82, 0.9, 0.95, 0.68, 0.79, 0.74, 0.79]}], {"title": "2015-2016 DE-Offered Percentages", "geo": {"scope": "usa"}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
 </div>
 
 </div>
@@ -12842,7 +12885,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[244]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ap_by_state</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_APENR_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -12860,7 +12903,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[245]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">ap_by_state</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;No&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;pct&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
@@ -13276,7 +13319,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[128]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ap_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;choropleth&#39;</span><span class="p">,</span>
@@ -13305,7 +13348,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[135]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ap_layout</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;2015-2016 AP-Offered Percentages&#39;</span><span class="p">,</span>
@@ -13319,7 +13362,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[133]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ap_choromap</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">ap_data</span><span class="p">],</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">ap_layout</span><span class="p">)</span>
@@ -13332,7 +13375,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[134]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">iplot</span><span class="p">(</span><span class="n">ap_choromap</span><span class="p">)</span>
@@ -13354,7 +13397,7 @@ Name: LEAID, dtype: int64
 
 
 <div class="output_html rendered_html output_subarea ">
-<div id="d59b11f8-1430-4cdf-a62b-a3464b5db947" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("d59b11f8-1430-4cdf-a62b-a3464b5db947", [{"type": "choropleth", "locations": ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"], "locationmode": "USA-states", "colorscale": [[0.0, "rgb(255,255,255)"], [0.2, "rgb(255,221,221)"], [0.4, "rgb(255, 200, 200)"], [0.8, "rgb(255, 50, 50)"], [1.0, "rgb(180,0,0)"]], "reversescale": false, "text": ["Home #1", "Home #2", "Home #3"], "z": [0.64, 0.75, 0.94, 0.5, 0.87, 0.71, 0.92, 1.0, 0.87, 0.93, 0.93, 0.95, 0.54, 0.46, 0.67, 0.89, 0.31, 0.91, 0.73, 0.92, 0.95, 0.88, 0.74, 0.47, 0.45, 0.74, 0.46, 0.8, 0.22, 0.26, 0.81, 0.95, 0.48, 0.74, 0.79, 0.62, 0.54, 0.59, 0.89, 0.84, 0.85, 0.4, 0.59, 0.82, 0.7, 0.93, 0.93, 0.79, 0.84, 0.97, 0.41]}], {"title": "2015-2016 AP Percentages", "geo": {"scope": "usa"}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
+<div id="02027b95-e5a7-4ebf-8149-726ab59d5a19" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("02027b95-e5a7-4ebf-8149-726ab59d5a19", [{"type": "choropleth", "locations": ["AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"], "locationmode": "USA-states", "colorscale": [[0.0, "rgb(255,255,255)"], [0.2, "rgb(255,221,221)"], [0.4, "rgb(255, 200, 200)"], [0.8, "rgb(255, 50, 50)"], [1.0, "rgb(180,0,0)"]], "reversescale": false, "text": ["Home #1", "Home #2", "Home #3"], "z": [0.64, 0.75, 0.94, 0.5, 0.87, 0.71, 0.92, 1.0, 0.87, 0.93, 0.93, 0.95, 0.54, 0.46, 0.67, 0.89, 0.31, 0.91, 0.73, 0.92, 0.95, 0.88, 0.74, 0.47, 0.45, 0.74, 0.46, 0.8, 0.22, 0.26, 0.81, 0.95, 0.48, 0.74, 0.79, 0.62, 0.54, 0.59, 0.89, 0.84, 0.85, 0.4, 0.59, 0.82, 0.7, 0.93, 0.93, 0.79, 0.84, 0.97, 0.41]}], {"title": "2015-2016 AP-Offered Percentages", "geo": {"scope": "usa"}}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>
 </div>
 
 </div>
@@ -13373,7 +13416,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[183]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;total_enrollment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs</span><span class="p">[</span><span class="s1">&#39;TOT_ENR_M&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">hs</span><span class="p">[</span><span class="s1">&#39;TOT_ENR_F&#39;</span><span class="p">]</span>
@@ -13386,7 +13429,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[180]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">school_sizer</span><span class="p">(</span><span class="n">enroll</span><span class="p">):</span>
@@ -13406,7 +13449,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[184]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;size_group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs</span><span class="p">[</span><span class="s1">&#39;total_enrollment&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">school_sizer</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -13419,11 +13462,13 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[185]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;size_group&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">hs</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Number of Schools in each Size Group&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;&lt;100&#39;</span><span class="p">,</span> <span class="s1">&#39;100-499&#39;</span><span class="p">,</span> <span class="s1">&#39;500-1199&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;1200&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13436,13 +13481,13 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[185]:</div>
+<div class="prompt output_prompt">Out[29]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Text(0.5,1,&#39;Number of Schools in each Size Group&#39;)</pre>
+<pre>Text(0.5,0,&#39;&#39;)</pre>
 </div>
 
 </div>
@@ -13455,7 +13500,7 @@ Name: LEAID, dtype: int64
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -13468,7 +13513,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[187]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs_by_size</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;size_group&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -13487,7 +13532,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[187]:</div>
+<div class="prompt output_prompt">Out[30]:</div>
 
 
 
@@ -13558,7 +13603,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[192]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs_by_size</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;size_group&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;pct_de&#39;</span><span class="p">)</span>
@@ -13582,7 +13627,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[192]:</div>
+<div class="prompt output_prompt">Out[31]:</div>
 
 
 
@@ -13622,7 +13667,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[194]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -13656,7 +13701,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[196]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">region_mapper</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
@@ -13685,7 +13730,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[198]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="o">.</span><span class="n">columns</span>
@@ -13701,7 +13746,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[198]:</div>
+<div class="prompt output_prompt">Out[34]:</div>
 
 
 
@@ -13724,7 +13769,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[199]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;LON1516&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;LAT1516&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">hs</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s1">&#39;region_accred&#39;</span><span class="p">,</span> <span class="n">fit_reg</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">aspect</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">)</span>
@@ -13741,13 +13786,13 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[199]:</div>
+<div class="prompt output_prompt">Out[35]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;seaborn.axisgrid.FacetGrid at 0x1188ab908&gt;</pre>
+<pre>&lt;seaborn.axisgrid.FacetGrid at 0x114fb3fd0&gt;</pre>
 </div>
 
 </div>
@@ -13773,7 +13818,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[201]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_by_region_accred</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;region_accred&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -13792,7 +13837,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[201]:</div>
+<div class="prompt output_prompt">Out[36]:</div>
 
 
 
@@ -13877,7 +13922,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[204]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">de_by_region_accred</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;region_accred&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;pct_de&#39;</span><span class="p">)</span>
@@ -13902,7 +13947,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[204]:</div>
+<div class="prompt output_prompt">Out[37]:</div>
 
 
 
@@ -13942,7 +13987,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[210]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">locale_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">11</span><span class="p">:</span> <span class="s1">&#39;City&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">:</span> <span class="s1">&#39;City&#39;</span><span class="p">,</span> <span class="mi">13</span><span class="p">:</span> <span class="s1">&#39;City&#39;</span><span class="p">,</span> <span class="mi">14</span><span class="p">:</span> <span class="s1">&#39;City&#39;</span><span class="p">,</span>
@@ -13960,7 +14005,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[211]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_by_locale</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;locale_group&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -13979,7 +14024,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[211]:</div>
+<div class="prompt output_prompt">Out[39]:</div>
 
 
 
@@ -14050,7 +14095,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[212]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">de_by_locale</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;locale_group&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;pct_de&#39;</span><span class="p">)</span>
@@ -14073,7 +14118,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[212]:</div>
+<div class="prompt output_prompt">Out[40]:</div>
 
 
 
@@ -14113,7 +14158,7 @@ Name: LEAID, dtype: int64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[214]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="o">.</span><span class="n">SCH_STATUS_CHARTER</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -14129,7 +14174,7 @@ Name: LEAID, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[214]:</div>
+<div class="prompt output_prompt">Out[41]:</div>
 
 
 
@@ -14148,7 +14193,7 @@ Name: SCH_STATUS_CHARTER, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[223]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_by_charter</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;SCH_STATUS_CHARTER&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -14168,7 +14213,7 @@ Name: SCH_STATUS_CHARTER, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[223]:</div>
+<div class="prompt output_prompt">Out[42]:</div>
 
 
 
@@ -14225,7 +14270,7 @@ Name: SCH_STATUS_CHARTER, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[220]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_by_charter</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;SCH_STATUS_CHARTER&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;pct_de&#39;</span><span class="p">)</span>
@@ -14248,7 +14293,7 @@ Name: SCH_STATUS_CHARTER, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[220]:</div>
+<div class="prompt output_prompt">Out[43]:</div>
 
 
 
@@ -14288,7 +14333,7 @@ Name: SCH_STATUS_CHARTER, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[224]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="o">.</span><span class="n">TITLEI</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -14304,7 +14349,7 @@ Name: SCH_STATUS_CHARTER, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[224]:</div>
+<div class="prompt output_prompt">Out[44]:</div>
 
 
 
@@ -14326,7 +14371,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[225]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Remove the Misreported/Null Values&quot;&quot;&quot;</span>
@@ -14344,7 +14389,7 @@ Name: TITLEI, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[225]:</div>
+<div class="prompt output_prompt">Out[45]:</div>
 
 
 
@@ -14363,7 +14408,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[226]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_by_titleI</span> <span class="o">=</span> <span class="n">hs_by_titleI</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;TITLEI&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -14383,7 +14428,7 @@ Name: TITLEI, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[226]:</div>
+<div class="prompt output_prompt">Out[46]:</div>
 
 
 
@@ -14440,7 +14485,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[228]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_by_titleI</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;TITLEI&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;pct_de&#39;</span><span class="p">)</span>
@@ -14463,7 +14508,7 @@ Name: TITLEI, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[228]:</div>
+<div class="prompt output_prompt">Out[47]:</div>
 
 
 
@@ -14503,7 +14548,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[229]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;pct_eth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="s1">&#39;total_enrollment&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_ENR_WH_F&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">hs</span><span class="p">[</span><span class="s1">&#39;SCH_ENR_WH_M&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">hs</span><span class="p">[</span><span class="s1">&#39;total_enrollment&#39;</span><span class="p">]</span>
@@ -14516,7 +14561,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[236]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs</span><span class="o">.</span><span class="n">pct_eth</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">xlim</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
@@ -14535,7 +14580,7 @@ Name: TITLEI, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[236]:</div>
+<div class="prompt output_prompt">Out[49]:</div>
 
 
 
@@ -14567,7 +14612,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[237]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">eth_grouper</span><span class="p">(</span><span class="n">pct</span><span class="p">):</span>
@@ -14591,7 +14636,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[238]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs_by_eth_quin</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;eth_quintile&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -14688,7 +14733,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[241]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs_by_eth_quin</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;eth_quintile&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;pct_de&#39;</span><span class="p">)</span>
@@ -14712,7 +14757,7 @@ Name: TITLEI, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[241]:</div>
+<div class="prompt output_prompt">Out[52]:</div>
 
 
 
@@ -14742,6 +14787,51 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;States with the highest number of 98%+ non-white schools (top 10)&quot;&quot;&quot;</span>
+<span class="n">hs</span><span class="p">[</span><span class="n">hs</span><span class="o">.</span><span class="n">pct_eth</span> <span class="o">&gt;=</span> <span class="mf">0.98</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[66]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>LEA_STATE
+CA    174
+TX    148
+NY    145
+IL     70
+GA     43
+NJ     39
+MI     36
+MS     36
+AZ     32
+TN     30
+Name: LEAID, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -14752,7 +14842,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[254]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hs_by_district</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;LEAID&#39;</span><span class="p">,</span> <span class="s1">&#39;LEA_NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;LEA_STATE&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_DUAL_IND&#39;</span><span class="p">])[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -14770,10 +14860,10 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[262]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
     <span class="n">display</span><span class="p">(</span><span class="n">hs_by_district</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;No&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Total Schools&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
 </pre></div>
 
@@ -15090,13 +15180,364 @@ Name: TITLEI, dtype: int64</pre>
       <td>0.53</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <th>30</th>
+      <td>1201560</td>
+      <td>PINELLAS</td>
+      <td>FL</td>
+      <td>17</td>
+      <td>18</td>
+      <td>0.94</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2102990</td>
+      <td>Jefferson County</td>
+      <td>KY</td>
+      <td>12</td>
+      <td>18</td>
+      <td>0.67</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>2400090</td>
+      <td>Baltimore City Public Schools</td>
+      <td>MD</td>
+      <td>1</td>
+      <td>18</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>5509600</td>
+      <td>Milwaukee School District</td>
+      <td>WI</td>
+      <td>14</td>
+      <td>18</td>
+      <td>0.78</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>4702220</td>
+      <td>Knox County</td>
+      <td>TN</td>
+      <td>14</td>
+      <td>17</td>
+      <td>0.82</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>4502310</td>
+      <td>Greenville 01</td>
+      <td>SC</td>
+      <td>15</td>
+      <td>17</td>
+      <td>0.88</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>3904380</td>
+      <td>Columbus City School District</td>
+      <td>OH</td>
+      <td>17</td>
+      <td>17</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>1302280</td>
+      <td>Fulton County</td>
+      <td>GA</td>
+      <td>16</td>
+      <td>16</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>2612000</td>
+      <td>Detroit City School District</td>
+      <td>MI</td>
+      <td>1</td>
+      <td>16</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>2502790</td>
+      <td>Boston</td>
+      <td>MA</td>
+      <td>0</td>
+      <td>16</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>3200480</td>
+      <td>WASHOE COUNTY SCHOOL DISTRICT</td>
+      <td>NV</td>
+      <td>9</td>
+      <td>16</td>
+      <td>0.56</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>1201080</td>
+      <td>LEE</td>
+      <td>FL</td>
+      <td>15</td>
+      <td>16</td>
+      <td>0.94</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>1200150</td>
+      <td>BREVARD</td>
+      <td>FL</td>
+      <td>16</td>
+      <td>16</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>1301290</td>
+      <td>Cobb County</td>
+      <td>GA</td>
+      <td>16</td>
+      <td>16</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>1201590</td>
+      <td>POLK</td>
+      <td>FL</td>
+      <td>15</td>
+      <td>15</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>4819700</td>
+      <td>FORT WORTH ISD</td>
+      <td>TX</td>
+      <td>15</td>
+      <td>15</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>3700011</td>
+      <td>Cumberland County Schools</td>
+      <td>NC</td>
+      <td>14</td>
+      <td>14</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>1300120</td>
+      <td>Atlanta Public Schools</td>
+      <td>GA</td>
+      <td>10</td>
+      <td>14</td>
+      <td>0.71</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>2200540</td>
+      <td>East Baton Rouge Parish</td>
+      <td>LA</td>
+      <td>2</td>
+      <td>13</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>3411340</td>
+      <td>NEWARK PUBLIC SCHOOL DISTRICT</td>
+      <td>NJ</td>
+      <td>9</td>
+      <td>13</td>
+      <td>0.69</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>3500060</td>
+      <td>ALBUQUERQUE PUBLIC SCHOOLS</td>
+      <td>NM</td>
+      <td>6</td>
+      <td>13</td>
+      <td>0.46</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>3701500</td>
+      <td>Winston Salem/Forsyth County Schools</td>
+      <td>NC</td>
+      <td>0</td>
+      <td>13</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>638640</td>
+      <td>Sweetwater Union High</td>
+      <td>CA</td>
+      <td>11</td>
+      <td>13</td>
+      <td>0.85</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>1100030</td>
+      <td>District of Columbia Public Schools</td>
+      <td>DC</td>
+      <td>1</td>
+      <td>13</td>
+      <td>0.08</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>4701590</td>
+      <td>Hamilton County</td>
+      <td>TN</td>
+      <td>8</td>
+      <td>12</td>
+      <td>0.67</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>5307710</td>
+      <td>Seattle Public Schools</td>
+      <td>WA</td>
+      <td>6</td>
+      <td>12</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>3624750</td>
+      <td>ROCHESTER CITY SCHOOL DISTRICT</td>
+      <td>NY</td>
+      <td>4</td>
+      <td>12</td>
+      <td>0.33</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>406330</td>
+      <td>Phoenix Union High School District</td>
+      <td>AZ</td>
+      <td>11</td>
+      <td>12</td>
+      <td>0.92</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>2400420</td>
+      <td>Howard County Public Schools</td>
+      <td>MD</td>
+      <td>12</td>
+      <td>12</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>102370</td>
+      <td>Mobile County</td>
+      <td>AL</td>
+      <td>12</td>
+      <td>12</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>5103840</td>
+      <td>VA BEACH CITY PBLC SCHS</td>
+      <td>VA</td>
+      <td>11</td>
+      <td>12</td>
+      <td>0.92</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>4808940</td>
+      <td>AUSTIN ISD</td>
+      <td>TX</td>
+      <td>8</td>
+      <td>12</td>
+      <td>0.67</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>2400060</td>
+      <td>Anne Arundel County Public Schools</td>
+      <td>MD</td>
+      <td>12</td>
+      <td>12</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>4818300</td>
+      <td>EL PASO ISD</td>
+      <td>TX</td>
+      <td>12</td>
+      <td>12</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>901920</td>
+      <td>HARTFORD SCHOOL DISTRICT</td>
+      <td>CT</td>
+      <td>4</td>
+      <td>11</td>
+      <td>0.36</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>1301020</td>
+      <td>SCCPSS</td>
+      <td>GA</td>
+      <td>7</td>
+      <td>11</td>
+      <td>0.64</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>5103130</td>
+      <td>PRINCE WILLIAM CO PBLC SCHS</td>
+      <td>VA</td>
+      <td>11</td>
+      <td>11</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>611820</td>
+      <td>East Side Union High School District</td>
+      <td>CA</td>
+      <td>2</td>
+      <td>11</td>
+      <td>0.18</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>3904375</td>
+      <td>Cincinnati City</td>
+      <td>OH</td>
+      <td>10</td>
+      <td>11</td>
+      <td>0.91</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>616230</td>
+      <td>Grossmont Union High</td>
+      <td>CA</td>
+      <td>1</td>
+      <td>11</td>
+      <td>0.09</td>
     </tr>
     <tr>
       <th>70</th>
@@ -15370,7 +15811,6 @@ Name: TITLEI, dtype: int64</pre>
     </tr>
   </tbody>
 </table>
-<p>100 rows × 6 columns</p>
 </div>
 </div>
 
@@ -15382,10 +15822,12 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[269]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Distribution of DE-Offering Percentages sorted by largest to smallest districts (top 100), so left-x-axis have the</span>
+<span class="sd">largest districts, and right-x-axis have the smallest.&quot;&quot;&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">hs_by_district</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;No&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Total Schools&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)[</span><span class="s1">&#39;pct_de&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;DE-Offering Percentages of the Top 100 Districts&#39;</span><span class="p">)</span>
@@ -15401,7 +15843,7 @@ Name: TITLEI, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[269]:</div>
+<div class="prompt output_prompt">Out[68]:</div>
 
 
 
@@ -15431,6 +15873,57 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Distribution of De-Offering % of the top 100 schools (no proper order), looks like 8 districts have 0%&quot;&quot;&quot;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">hs_by_district</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;No&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;Total Schools&#39;</span><span class="p">],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;index&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;pct_de&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)[</span><span class="s1">&#39;pct_de&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;DE-Offering Percentages of the Top 100 Districts&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[73]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Text(0.5,1,&#39;DE-Offering Percentages of the Top 100 Districts&#39;)</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -15441,7 +15934,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[273]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Yes&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;No&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>
@@ -15455,7 +15948,7 @@ Name: TITLEI, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[281]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># scl = [ [0,&quot;rgb(5, 10, 172)&quot;], [1,&quot;rgb(0, 200, 100)&quot;] ]</span>
