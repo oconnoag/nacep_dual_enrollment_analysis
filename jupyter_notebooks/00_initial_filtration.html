@@ -12365,7 +12365,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Column-info-for-nces_1516">Column info for nces_1516<a class="anchor-link" href="#Column-info-for-nces_1516">&#182;</a></h1><p><div class="alert alert-block alert-info"><strong>15 Fields</strong></p>
+<h1 id="Column-info-for-nces_1516">Column info for nces_1516<a class="anchor-link" href="#Column-info-for-nces_1516">&#182;</a></h1><p><div class="alert alert-block alert-info"><strong>17 Fields</strong></p>
 
 </div>
 </div>
@@ -14487,14 +14487,23 @@ The problem that I found was that the CRDC lumped a number of school districts t
 <li>Using the NCES data from 2013:  This was also problematic, as most of the same schools that were missing in this dataset were also constrained to the same problem in the 2013-2014 dataset.<br></li>
 <li>Using the District and the name together:  This also suffered from the fact that the CRDC data combines some school districts; therefore, the names of the districts still did not match up.<br></li>
 <li><strong>Finally, I used a combination of the name of the school and the state:  There were only a handfull in the dataset containing the missing values.</strong><br><br>
-&lt;/div&gt;
-&lt;div class = 'alert alert-cell alert-warning'&gt;
-<strong>821 (out of 1194)</strong> Missing Schools were recovered using this method &lt;/div&gt;
-&lt;div class = 'alert alert-cell alert-info'&gt;
-I performed the same (nces-provided field)-filtration steps on the recovered data.  Then, I hand-removed duplicate values by checking the original filtered data for matching records. &lt;/div&gt;
-&lt;div class = 'alert alert-cell alert-warning'&gt;
-<strong>453</strong> Recovered High Schools Total  &lt;/div&gt;</li>
+&lt;/div&gt;</li>
 </ul>
+<p>&lt;div class = 'alert alert-cell alert-warning'&gt;
+<strong>821 (out of 1194)</strong> Missing Schools were recovered using this method &lt;/div&gt;</p>
+<p>&lt;div class = 'alert alert-cell alert-info'&gt;
+Next, I recovered the remaining schools in the 'New York City Public Schools District', because it was clear that they were simply missing due to a LEA reporting error in the CRDC data.  This process was two-parted:<br></p>
+<ul>
+<li>First, Because it seemed as though most of these remaining New York schools had the incorrect LEAID, I used the the school id and state abreviation to create a unique identifier.<br></li>
+<li>Second, I used the NCES database to manually search for the remaining schools correct their combokey
+&lt;/div&gt;</li>
+</ul>
+<p>&lt;div class = 'alert alert-cell alert-warning'&gt;
+<strong>36</strong> More High Schools Recovered  &lt;/div&gt;</p>
+<p>&lt;div class = 'alert alert-cell alert-info'&gt;
+I performed the same (nces-provided field)-filtration steps on the recovered data.  Then, I hand-removed duplicate values by checking the original filtered data for matching records. &lt;/div&gt;</p>
+<p>&lt;div class = 'alert alert-cell alert-warning'&gt;
+<strong>468</strong> Recovered High Schools Total  &lt;/div&gt;</p>
 
 </div>
 </div>
@@ -15405,16 +15414,16 @@ Name: SCH_NAME_ST_NUM, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>tarrant co j j a e p                         6
-community collaborative charter              4
-hart el                                      2
-university high                              2
-accelerated achievement academy              2
-beacon high school                           2
-performance learning center                  2
-riverdale/kingsbridge academy (ms/hs 141)    1
-edward r murrow high school                  1
-horizon charter                              1
+<pre>tarrant co j j a e p                    6
+community collaborative charter         4
+accelerated achievement academy         2
+hart el                                 2
+beacon high school                      2
+performance learning center             2
+university high                         2
+academy of arts and sciences: sonoma    1
+stuyvesant high school                  1
+ps 284 lew wallace                      1
 Name: SCH_NAME_, dtype: int64</pre>
 </div>
 
@@ -15496,7 +15505,526 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Performing-filters-on-the-recovered-schools">Performing filters on the recovered schools<a class="anchor-link" href="#Performing-filters-on-the-recovered-schools">&#182;</a></h2>
+<h2 id="Recover-the-NY-Schools">Recover the NY Schools<a class="anchor-link" href="#Recover-the-NY-Schools">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schname_combined_missing</span> <span class="o">=</span> <span class="n">schname_combined</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">schname_combined_missing</span> <span class="o">=</span> <span class="n">schname_combined_missing</span><span class="p">[</span><span class="n">schname_combined_missing</span><span class="o">.</span><span class="n">SCH_NAME_</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+
+<span class="n">schname_combined_missing_ny</span> <span class="o">=</span> <span class="n">schname_combined_missing</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">schname_combined_missing_ny</span> <span class="o">=</span> <span class="n">schname_combined_missing_ny</span><span class="p">[</span><span class="n">schname_combined_missing_ny</span><span class="p">[</span><span class="s1">&#39;LEA_NAME&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;NEW YORK CITY PUBLIC SCHOOLS&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">schname_combined_missing_ny</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schname_combined_missing_ny</span><span class="o">.</span><span class="n">SCHID</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>36
+36
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schname_combined_missing_ny</span> <span class="o">=</span> <span class="n">schname_combined_missing_ny</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;TITLEI_&#39;</span><span class="p">,</span> <span class="s1">&#39;STABR_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE_TEXT_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE_&#39;</span><span class="p">,</span>
+                                                                <span class="s1">&#39;LEVEL_&#39;</span><span class="p">,</span> <span class="s1">&#39;VIRTUAL_&#39;</span><span class="p">,</span> <span class="s1">&#39;GSLO_&#39;</span><span class="p">,</span> <span class="s1">&#39;GSHI_&#39;</span><span class="p">,</span> 
+                                            <span class="s1">&#39;NMCNTY15_&#39;</span><span class="p">,</span> <span class="s1">&#39;LOCALE15_&#39;</span><span class="p">,</span> <span class="s1">&#39;LAT1516_&#39;</span><span class="p">,</span> <span class="s1">&#39;LON1516_&#39;</span><span class="p">,</span> <span class="s1">&#39;combokey&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;LEAID_&#39;</span><span class="p">,</span> <span class="s1">&#39;LEA_NAME_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_NAME_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCHID_&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">schid_state_maker</span><span class="p">(</span><span class="n">schid</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="n">schid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">schid</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">schid</span> <span class="o">+</span> <span class="n">state</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">schname_combined_missing_ny</span><span class="p">[</span><span class="s1">&#39;schid_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">schname_combined_missing_ny</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">schid_state_maker</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;SCHID&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nces_for_missing_ny</span> <span class="o">=</span> <span class="n">nces_1516_full</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">nces_for_missing_ny</span><span class="p">[</span><span class="s1">&#39;schid_state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nces_for_missing_ny</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">schid_state_maker</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;SCHID&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;STABR&#39;</span><span class="p">]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">missing_ny_joined</span> <span class="o">=</span> <span class="n">schname_combined_missing_ny</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;schid_state&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nces_for_missing_ny</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;schid_state&#39;</span><span class="p">),</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">rsuffix</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot; Join the missing NY schools with NCES &quot;&quot;&quot;</span>
+<span class="n">missing_ny_joined</span><span class="p">[</span><span class="n">missing_ny_joined</span><span class="o">.</span><span class="n">LEVEL_</span><span class="o">.</span><span class="n">notnull</span><span class="p">()][[</span><span class="s1">&#39;SCH_NAME&#39;</span><span class="p">,</span><span class="s1">&#39;SCH_NAME_&#39;</span><span class="p">]]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[90]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SCH_NAME</th>
+      <th>SCH_NAME_</th>
+    </tr>
+    <tr>
+      <th>schid_state</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>01348NY</th>
+      <td>is 187 the christa mcauliffe school</td>
+      <td>IS 187 CHRISTA MCAULIFFE SCHOOL (THE)</td>
+    </tr>
+    <tr>
+      <th>01409NY</th>
+      <td>law, government and community service high school</td>
+      <td>LAW GOVERNMENT AND COMMUNITY SERVICE HIGH SCHOOL</td>
+    </tr>
+    <tr>
+      <th>02147NY</th>
+      <td>ps/ms 31 the william lloyd garrison</td>
+      <td>PS/MS 31 WILLIAM LLOYD GARRISON (THE)</td>
+    </tr>
+    <tr>
+      <th>02199NY</th>
+      <td>ps 45 horace e greene</td>
+      <td>PS/IS 45 HORACE E GREENE</td>
+    </tr>
+    <tr>
+      <th>02316NY</th>
+      <td>jhs 80 the mosholu parkway</td>
+      <td>JHS 80 MOSHOLU PARKWAY (THE)</td>
+    </tr>
+    <tr>
+      <th>02731NY</th>
+      <td>ps 225 the eileen e zaglin</td>
+      <td>PS 225 EILEEN E ZAGLIN (THE)</td>
+    </tr>
+    <tr>
+      <th>02829NY</th>
+      <td>ps 377 alejandina b de gautier</td>
+      <td>PS 377 ALEJANDRINA B DE GAUTIER</td>
+    </tr>
+    <tr>
+      <th>02961NY</th>
+      <td>bronx school for law, government and justice</td>
+      <td>BRONX SCHOOL FOR LAW GOVERNMENT AND JUSTICE</td>
+    </tr>
+    <tr>
+      <th>03091NY</th>
+      <td>high school of enterprise, business &amp; technology</td>
+      <td>HIGH SCHOOL OF ENTERPRISE BUSINESS &amp; TECHNOLOGY</td>
+    </tr>
+    <tr>
+      <th>04873NY</th>
+      <td>new explorations into science,tech and math hi...</td>
+      <td>NEW EXPLORATIONS INTO SCIENCETECH AND MATH HIG...</td>
+    </tr>
+    <tr>
+      <th>04878NY</th>
+      <td>is 318 math, science &amp; tech through arts school</td>
+      <td>IS 318 MATH SCIENCE &amp; TECH THROUGH ARTS SCHOOL</td>
+    </tr>
+    <tr>
+      <th>04888NY</th>
+      <td>is 349 math, science and technology</td>
+      <td>IS 349 MATH SCIENCE AND TECHNOLOGY</td>
+    </tr>
+    <tr>
+      <th>05113NY</th>
+      <td>high school for law, advocacy and community ju...</td>
+      <td>HIGH SCHOOL FOR LAW ADVOCACY AND COMMUNITY JUS...</td>
+    </tr>
+    <tr>
+      <th>05516NY</th>
+      <td>science, tech &amp; research high school at erasmus</td>
+      <td>SCIENCE TECH &amp; RESEARCH HIGH SCHOOL AT ERASMUS</td>
+    </tr>
+    <tr>
+      <th>05521NY</th>
+      <td>ms 223 laboratory school of finance and techno...</td>
+      <td>MS 223 LABORATORY SCHOOL OF FINANCE AND TECHNO...</td>
+    </tr>
+    <tr>
+      <th>05536NY</th>
+      <td>queens high school of teaching, liberal arts a...</td>
+      <td>QUEENS HIGH SCHOOL OF TEACHING LIBERAL ARTS AN...</td>
+    </tr>
+    <tr>
+      <th>05677NY</th>
+      <td>marie curie high sch-nursing, medicine &amp; appli...</td>
+      <td>MARIE CURIE HIGH SCH-NURSING MEDICINE &amp; APPLIE...</td>
+    </tr>
+    <tr>
+      <th>05774NY</th>
+      <td>high school for arts, imagination and inquiry</td>
+      <td>HIGH SCHOOL FOR ARTS IMAGINATION AND INQUIRY</td>
+    </tr>
+    <tr>
+      <th>05801NY</th>
+      <td>young scholars academy of the bronx</td>
+      <td>YOUNG SCHOLARS ACADEMY OF THE BRONX (THE)</td>
+    </tr>
+    <tr>
+      <th>05899NY</th>
+      <td>high sch-construction, trades, engineering &amp; a...</td>
+      <td>HIGH SCH-CONSTRUCTION TRADES ENGINEERING &amp; ARC...</td>
+    </tr>
+    <tr>
+      <th>05962NY</th>
+      <td>brooklyn community high sch-communication, art...</td>
+      <td>BROOKLYN COMMUNITY HIGH SCH-COMMUNICATION ARTS...</td>
+    </tr>
+    <tr>
+      <th>05985NY</th>
+      <td>archimedes acad-math, sci, tech</td>
+      <td>ARCHIMEDES ACAD-MATH SCI TECH</td>
+    </tr>
+    <tr>
+      <th>05999NY</th>
+      <td>queens high school for information, research a...</td>
+      <td>QUEENS HIGH SCHOOL FOR INFORMATION RESEARCH AN...</td>
+    </tr>
+    <tr>
+      <th>06105NY</th>
+      <td>high school for language and diplomacy</td>
+      <td>HIGH SCHOOL FOR LANGUAGE AND DIPLOMACY (THE)</td>
+    </tr>
+    <tr>
+      <th>06122NY</th>
+      <td>the brooklyn academy of global finance</td>
+      <td>BROOKLYN ACADEMY OF GLOBAL FINANCE (THE)</td>
+    </tr>
+    <tr>
+      <th>06148NY</th>
+      <td>urban assembly school for green careers</td>
+      <td>URBAN ASSEMBLY SCHOOL FOR GREEN CAREERS (THE)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot; Dealing with remaining missing NY Schools &quot;&quot;&quot;</span>
+<span class="n">missing_ny_2</span> <span class="o">=</span> <span class="n">missing_ny_joined</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">missing_ny_2</span> <span class="o">=</span> <span class="n">missing_ny_2</span><span class="p">[</span><span class="n">missing_ny_2</span><span class="o">.</span><span class="n">LEVEL_</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+
+<span class="nb">len</span><span class="p">(</span><span class="n">missing_ny_2</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[91]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">missing_ny_2</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[92]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([&#39;COMBOKEY&#39;, &#39;LEA_STATE&#39;, &#39;LEA_STATE_NAME&#39;, &#39;LEAID&#39;, &#39;LEA_NAME&#39;,
+       &#39;SCHID&#39;, &#39;SCH_NAME&#39;, &#39;JJ&#39;, &#39;SCH_GRADE_PS&#39;, &#39;SCH_GRADE_KG&#39;,
+       &#39;SCH_GRADE_G01&#39;, &#39;SCH_GRADE_G02&#39;, &#39;SCH_GRADE_G03&#39;, &#39;SCH_GRADE_G04&#39;,
+       &#39;SCH_GRADE_G05&#39;, &#39;SCH_GRADE_G06&#39;, &#39;SCH_GRADE_G07&#39;, &#39;SCH_GRADE_G08&#39;,
+       &#39;SCH_GRADE_G09&#39;, &#39;SCH_GRADE_G10&#39;, &#39;SCH_GRADE_G11&#39;, &#39;SCH_GRADE_G12&#39;,
+       &#39;SCH_GRADE_UG&#39;, &#39;SCH_UGDETAIL_HS&#39;, &#39;SCH_STATUS_SPED&#39;,
+       &#39;SCH_STATUS_MAGNET&#39;, &#39;SCH_STATUS_CHARTER&#39;, &#39;SCH_STATUS_ALT&#39;,
+       &#39;SCH_ENR_HI_M&#39;, &#39;SCH_ENR_HI_F&#39;, &#39;SCH_ENR_AM_M&#39;, &#39;SCH_ENR_AM_F&#39;,
+       &#39;SCH_ENR_AS_M&#39;, &#39;SCH_ENR_AS_F&#39;, &#39;SCH_ENR_HP_M&#39;, &#39;SCH_ENR_HP_F&#39;,
+       &#39;SCH_ENR_BL_M&#39;, &#39;SCH_ENR_BL_F&#39;, &#39;SCH_ENR_WH_M&#39;, &#39;SCH_ENR_WH_F&#39;,
+       &#39;SCH_ENR_TR_M&#39;, &#39;SCH_ENR_TR_F&#39;, &#39;TOT_ENR_M&#39;, &#39;TOT_ENR_F&#39;,
+       &#39;SCH_ENR_LEP_M&#39;, &#39;SCH_ENR_LEP_F&#39;, &#39;SCH_ENR_IDEA_M&#39;,
+       &#39;SCH_ENR_IDEA_F&#39;, &#39;SCH_DUAL_IND&#39;, &#39;SCH_DUALENR_HI_M&#39;,
+       &#39;SCH_DUALENR_HI_F&#39;, &#39;SCH_DUALENR_AM_M&#39;, &#39;SCH_DUALENR_AM_F&#39;,
+       &#39;SCH_DUALENR_AS_M&#39;, &#39;SCH_DUALENR_AS_F&#39;, &#39;SCH_DUALENR_HP_M&#39;,
+       &#39;SCH_DUALENR_HP_F&#39;, &#39;SCH_DUALENR_BL_M&#39;, &#39;SCH_DUALENR_BL_F&#39;,
+       &#39;SCH_DUALENR_WH_M&#39;, &#39;SCH_DUALENR_WH_F&#39;, &#39;SCH_DUALENR_TR_M&#39;,
+       &#39;SCH_DUALENR_TR_F&#39;, &#39;TOT_DUALENR_M&#39;, &#39;TOT_DUALENR_F&#39;,
+       &#39;SCH_DUALENR_LEP_M&#39;, &#39;SCH_DUALENR_LEP_F&#39;, &#39;SCH_DUALENR_IDEA_M&#39;,
+       &#39;SCH_DUALENR_IDEA_F&#39;, &#39;SCH_APENR_IND&#39;, &#39;SCH_APENR_HI_M&#39;,
+       &#39;SCH_APENR_HI_F&#39;, &#39;SCH_APENR_AM_M&#39;, &#39;SCH_APENR_AM_F&#39;,
+       &#39;SCH_APENR_AS_M&#39;, &#39;SCH_APENR_AS_F&#39;, &#39;SCH_APENR_HP_M&#39;,
+       &#39;SCH_APENR_HP_F&#39;, &#39;SCH_APENR_BL_M&#39;, &#39;SCH_APENR_BL_F&#39;,
+       &#39;SCH_APENR_WH_M&#39;, &#39;SCH_APENR_WH_F&#39;, &#39;SCH_APENR_TR_M&#39;,
+       &#39;SCH_APENR_TR_F&#39;, &#39;TOT_APENR_M&#39;, &#39;TOT_APENR_F&#39;, &#39;SCH_APENR_LEP_M&#39;,
+       &#39;SCH_APENR_LEP_F&#39;, &#39;SCH_APENR_IDEA_M&#39;, &#39;SCH_APENR_IDEA_F&#39;,
+       &#39;SCH_IBENR_IND&#39;, &#39;SCH_IBENR_HI_M&#39;, &#39;SCH_IBENR_HI_F&#39;,
+       &#39;SCH_IBENR_AM_M&#39;, &#39;SCH_IBENR_AM_F&#39;, &#39;SCH_IBENR_AS_M&#39;,
+       &#39;SCH_IBENR_AS_F&#39;, &#39;SCH_IBENR_HP_M&#39;, &#39;SCH_IBENR_HP_F&#39;,
+       &#39;SCH_IBENR_BL_M&#39;, &#39;SCH_IBENR_BL_F&#39;, &#39;SCH_IBENR_WH_M&#39;,
+       &#39;SCH_IBENR_WH_F&#39;, &#39;SCH_IBENR_TR_M&#39;, &#39;SCH_IBENR_TR_F&#39;,
+       &#39;TOT_IBENR_M&#39;, &#39;TOT_IBENR_F&#39;, &#39;SCH_IBENR_LEP_M&#39;, &#39;SCH_IBENR_LEP_F&#39;,
+       &#39;SCH_IBENR_IDEA_M&#39;, &#39;SCH_IBENR_IDEA_F&#39;, &#39;TITLEI&#39;, &#39;STABR&#39;,
+       &#39;SCH_TYPE_TEXT&#39;, &#39;SCH_TYPE&#39;, &#39;LEVEL&#39;, &#39;VIRTUAL&#39;, &#39;GSLO&#39;, &#39;GSHI&#39;,
+       &#39;NMCNTY15&#39;, &#39;LOCALE15&#39;, &#39;LAT1516&#39;, &#39;LON1516&#39;, &#39;Low_Grade_Above9&#39;,
+       &#39;High_Grade_12&#39;, &#39;combokey&#39;, &#39;TITLEI_&#39;, &#39;LEAID_&#39;, &#39;LEA_NAME_&#39;,
+       &#39;STABR_&#39;, &#39;SCHID_&#39;, &#39;SCH_NAME_&#39;, &#39;SCH_TYPE_TEXT_&#39;, &#39;SCH_TYPE_&#39;,
+       &#39;LEVEL_&#39;, &#39;VIRTUAL_&#39;, &#39;GSLO_&#39;, &#39;GSHI_&#39;, &#39;NMCNTY15_&#39;, &#39;LOCALE15_&#39;,
+       &#39;LAT1516_&#39;, &#39;LON1516_&#39;], dtype=object)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">missing_ny_2</span> <span class="o">=</span> <span class="n">missing_ny_2</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;TITLEI_&#39;</span><span class="p">,</span> <span class="s1">&#39;STABR_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE_TEXT_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE_&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;LEVEL_&#39;</span><span class="p">,</span> <span class="s1">&#39;VIRTUAL_&#39;</span><span class="p">,</span> <span class="s1">&#39;GSLO_&#39;</span><span class="p">,</span> <span class="s1">&#39;GSHI_&#39;</span><span class="p">,</span> 
+                   <span class="s1">&#39;NMCNTY15_&#39;</span><span class="p">,</span> <span class="s1">&#39;LOCALE15_&#39;</span><span class="p">,</span> <span class="s1">&#39;LAT1516_&#39;</span><span class="p">,</span> <span class="s1">&#39;LON1516_&#39;</span><span class="p">,</span> <span class="s1">&#39;combokey&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;LEAID_&#39;</span><span class="p">,</span> <span class="s1">&#39;LEA_NAME_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_NAME_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCHID_&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">missing_ny_2</span><span class="p">[</span><span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_ny_2</span><span class="o">.</span><span class="n">index</span><span class="p">)),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99780NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360012306528&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99796NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360012306535&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99775NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360012006484&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99776NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360010106508&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99805NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360008306490&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99874NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360007706372&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99933NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360008106380&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99968NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360007606296&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99992NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360009706274&#39;&quot;</span>
+<span class="n">missing_ny_2</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s2">&quot;99995NY&quot;</span><span class="p">,</span> <span class="s1">&#39;actual_combokey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;=&#39;360009506273&#39;&quot;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot; Join again on the NCES &quot;&quot;&quot;</span>
+<span class="n">missing_ny_2_joined</span> <span class="o">=</span> <span class="n">missing_ny_2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;actual_combokey&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nces_1516_full</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">rsuffix</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;How many matched?&quot;&quot;&quot;</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">missing_ny_2_joined</span><span class="p">[</span><span class="n">missing_ny_2_joined</span><span class="o">.</span><span class="n">LEVEL_</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[96]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Combine-recovered-schools-and-performing-filters">Combine recovered schools and performing filters<a class="anchor-link" href="#Combine-recovered-schools-and-performing-filters">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -15504,14 +16032,49 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong> Reformat the Columns </strong> -- Need to make sure that the recovered schools dataset's columns match the original filtered dataset's columns (required for concatenating the two sets properly)</p>
+<p><strong> Concatenate the two recovered Missing NY Schools sets </strong></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">missing_ny_joined_matching</span> <span class="o">=</span> <span class="n">missing_ny_joined</span><span class="p">[</span><span class="n">missing_ny_joined</span><span class="o">.</span><span class="n">LEVEL_</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">all_missing_ny_recovered</span> <span class="o">=</span> <span class="n">missing_ny_2_joined</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">missing_ny_joined_matching</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Join the original recovered schools (using schname_st identifier) with the recovered NY schools</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools</span> <span class="o">=</span> <span class="n">schname_combined</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -15525,7 +16088,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools</span> <span class="o">=</span> <span class="n">recovered_schools</span><span class="p">[</span><span class="n">recovered_schools</span><span class="p">[</span><span class="s1">&#39;SCH_NAME_&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;Missing&quot;</span><span class="p">]</span>
@@ -15538,16 +16101,38 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_all</span> <span class="o">=</span> <span class="n">recovered_schools</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_missing_ny_recovered</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong> Reformat the Columns </strong> -- Need to make sure that the recovered schools dataset's columns match the original filtered dataset's columns (required for concatenating the two sets properly)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Drop original nces columns (the ones with missing values)&quot;&quot;&quot;</span>    
-<span class="n">recovered_schools</span> <span class="o">=</span> <span class="n">recovered_schools</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;TITLEI&#39;</span><span class="p">,</span> <span class="s1">&#39;STABR&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE_TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE&#39;</span><span class="p">,</span> <span class="s1">&#39;LEVEL&#39;</span><span class="p">,</span> <span class="s1">&#39;VIRTUAL&#39;</span><span class="p">,</span> <span class="s1">&#39;GSLO&#39;</span><span class="p">,</span> <span class="s1">&#39;GSHI&#39;</span><span class="p">,</span> 
+<span class="n">recovered_schools_all</span> <span class="o">=</span> <span class="n">recovered_schools_all</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;TITLEI&#39;</span><span class="p">,</span> <span class="s1">&#39;STABR&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE_TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_TYPE&#39;</span><span class="p">,</span> <span class="s1">&#39;LEVEL&#39;</span><span class="p">,</span> <span class="s1">&#39;VIRTUAL&#39;</span><span class="p">,</span> <span class="s1">&#39;GSLO&#39;</span><span class="p">,</span> <span class="s1">&#39;GSHI&#39;</span><span class="p">,</span> 
                                             <span class="s1">&#39;NMCNTY15&#39;</span><span class="p">,</span> <span class="s1">&#39;LOCALE15&#39;</span><span class="p">,</span> <span class="s1">&#39;LAT1516&#39;</span><span class="p">,</span> <span class="s1">&#39;LON1516&#39;</span><span class="p">,</span> <span class="s1">&#39;combokey&#39;</span><span class="p">,</span>
                                             <span class="s1">&#39;LEAID_&#39;</span><span class="p">,</span> <span class="s1">&#39;LEA_NAME_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCH_NAME_&#39;</span><span class="p">,</span> <span class="s1">&#39;SCHID_&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;Rename new matching columns to replace the columns above (necessary for a proper concatenation later)&quot;&quot;&quot;</span>
-<span class="n">recovered_schools</span> <span class="o">=</span> <span class="n">recovered_schools</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="s1">&#39;columns&#39;</span><span class="p">)</span>
-<span class="n">recovered_schools</span> <span class="o">=</span> <span class="n">recovered_schools</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;COMBOKEY&#39;</span><span class="p">)</span>
+<span class="n">recovered_schools_all</span> <span class="o">=</span> <span class="n">recovered_schools_all</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+<span class="n">recovered_schools_all</span> <span class="o">=</span> <span class="n">recovered_schools_all</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;COMBOKEY&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -15557,11 +16142,11 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Do the columns between the original filtered set and recovered missing values set match&quot;&quot;&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">recovered_schools</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">recovered_schools_all</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filter5_crdc_nces_1516</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
 </pre></div>
 
@@ -15589,6 +16174,40 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot; How many schools recovered? &quot;&quot;&quot;</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">recovered_schools_all</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[104]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>857</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -15600,10 +16219,10 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter1</span> <span class="o">=</span> <span class="n">recovered_schools</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter1</span> <span class="o">=</span> <span class="n">recovered_schools_all</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -15613,10 +16232,10 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[106]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter1</span> <span class="o">=</span> <span class="n">recovered_schools_filter1</span><span class="p">[</span><span class="n">recovered_schools</span><span class="o">.</span><span class="n">VIRTUAL</span> <span class="o">!=</span> <span class="s1">&#39;Yes&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter1</span> <span class="o">=</span> <span class="n">recovered_schools_filter1</span><span class="p">[</span><span class="n">recovered_schools_filter1</span><span class="o">.</span><span class="n">VIRTUAL</span> <span class="o">!=</span> <span class="s1">&#39;Yes&#39;</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -15626,7 +16245,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;How many schools remain?&quot;&quot;&quot;</span>
@@ -15643,13 +16262,13 @@ Name: SCH_NAME_, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[89]:</div>
+<div class="prompt output_prompt">Out[107]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>808</pre>
+<pre>844</pre>
 </div>
 
 </div>
@@ -15669,7 +16288,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter2</span> <span class="o">=</span> <span class="n">recovered_schools_filter1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -15682,7 +16301,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter2</span> <span class="o">=</span> <span class="n">recovered_schools_filter2</span><span class="p">[(</span><span class="n">recovered_schools_filter2</span><span class="o">.</span><span class="n">LEVEL</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">)]</span>
@@ -15695,7 +16314,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;How many schools remain?&quot;&quot;&quot;</span>
@@ -15712,13 +16331,13 @@ Name: SCH_NAME_, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[92]:</div>
+<div class="prompt output_prompt">Out[110]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>493</pre>
+<pre>508</pre>
 </div>
 
 </div>
@@ -15738,7 +16357,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter3</span> <span class="o">=</span> <span class="n">recovered_schools_filter2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -15751,7 +16370,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[112]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter3</span> <span class="o">=</span> <span class="n">recovered_schools_filter3</span><span class="p">[</span><span class="n">recovered_schools_filter3</span><span class="o">.</span><span class="n">SCH_TYPE</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
@@ -15764,7 +16383,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[113]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;How many schools remain?&quot;&quot;&quot;</span>
@@ -15781,13 +16400,13 @@ Name: SCH_NAME_, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[95]:</div>
+<div class="prompt output_prompt">Out[113]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>457</pre>
+<pre>472</pre>
 </div>
 
 </div>
@@ -15807,7 +16426,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[114]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter3</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;SCH_NAME&#39;</span><span class="p">)[</span><span class="s1">&#39;SCH_NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -15823,7 +16442,7 @@ Name: SCH_NAME_, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[96]:</div>
+<div class="prompt output_prompt">Out[114]:</div>
 
 
 
@@ -15831,8 +16450,8 @@ Name: SCH_NAME_, dtype: int64</pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>SCH_NAME
 beacon high school                          2
-performance learning center                 2
 university high                             2
+performance learning center                 2
 world academy for total community health    1
 Name: SCH_NAME, dtype: int64</pre>
 </div>
@@ -15845,7 +16464,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="prompt input_prompt">In&nbsp;[115]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Dealing with Beacon&quot;&quot;&quot;</span>
@@ -15886,18 +16505,57 @@ Name: SCH_NAME, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>LEA_STATE</th>
-      <th>LEA_STATE_NAME</th>
+      <th>GSHI</th>
+      <th>GSLO</th>
+      <th>High_Grade_12</th>
+      <th>JJ</th>
+      <th>LAT1516</th>
       <th>LEAID</th>
       <th>LEA_NAME</th>
+      <th>LEA_STATE</th>
+      <th>LEA_STATE_NAME</th>
+      <th>LEVEL</th>
+      <th>LOCALE15</th>
+      <th>LON1516</th>
+      <th>Low_Grade_Above9</th>
+      <th>NMCNTY15</th>
       <th>SCHID</th>
-      <th>SCH_NAME</th>
-      <th>JJ</th>
-      <th>SCH_GRADE_PS</th>
-      <th>SCH_GRADE_KG</th>
-      <th>SCH_GRADE_G01</th>
-      <th>SCH_GRADE_G02</th>
-      <th>SCH_GRADE_G03</th>
+      <th>SCH_APENR_AM_F</th>
+      <th>SCH_APENR_AM_M</th>
+      <th>SCH_APENR_AS_F</th>
+      <th>SCH_APENR_AS_M</th>
+      <th>SCH_APENR_BL_F</th>
+      <th>SCH_APENR_BL_M</th>
+      <th>SCH_APENR_HI_F</th>
+      <th>SCH_APENR_HI_M</th>
+      <th>SCH_APENR_HP_F</th>
+      <th>SCH_APENR_HP_M</th>
+      <th>SCH_APENR_IDEA_F</th>
+      <th>SCH_APENR_IDEA_M</th>
+      <th>SCH_APENR_IND</th>
+      <th>SCH_APENR_LEP_F</th>
+      <th>SCH_APENR_LEP_M</th>
+      <th>SCH_APENR_TR_F</th>
+      <th>SCH_APENR_TR_M</th>
+      <th>SCH_APENR_WH_F</th>
+      <th>SCH_APENR_WH_M</th>
+      <th>SCH_DUALENR_AM_F</th>
+      <th>SCH_DUALENR_AM_M</th>
+      <th>SCH_DUALENR_AS_F</th>
+      <th>SCH_DUALENR_AS_M</th>
+      <th>SCH_DUALENR_BL_F</th>
+      <th>SCH_DUALENR_BL_M</th>
+      <th>SCH_DUALENR_HI_F</th>
+      <th>SCH_DUALENR_HI_M</th>
+      <th>SCH_DUALENR_HP_F</th>
+      <th>SCH_DUALENR_HP_M</th>
+      <th>SCH_DUALENR_IDEA_F</th>
+      <th>SCH_DUALENR_IDEA_M</th>
+      <th>SCH_DUALENR_LEP_F</th>
+      <th>SCH_DUALENR_LEP_M</th>
+      <th>SCH_DUALENR_TR_F</th>
+      <th>SCH_DUALENR_TR_M</th>
+      <th>...</th>
       <th>SCH_GRADE_G04</th>
       <th>SCH_GRADE_G05</th>
       <th>SCH_GRADE_G06</th>
@@ -15907,86 +16565,47 @@ Name: SCH_NAME, dtype: int64</pre>
       <th>SCH_GRADE_G10</th>
       <th>SCH_GRADE_G11</th>
       <th>SCH_GRADE_G12</th>
+      <th>SCH_GRADE_KG</th>
+      <th>SCH_GRADE_PS</th>
       <th>SCH_GRADE_UG</th>
-      <th>SCH_UGDETAIL_HS</th>
-      <th>SCH_STATUS_SPED</th>
-      <th>SCH_STATUS_MAGNET</th>
-      <th>SCH_STATUS_CHARTER</th>
-      <th>SCH_STATUS_ALT</th>
-      <th>SCH_ENR_HI_M</th>
-      <th>SCH_ENR_HI_F</th>
-      <th>SCH_ENR_AM_M</th>
-      <th>SCH_ENR_AM_F</th>
-      <th>SCH_ENR_AS_M</th>
-      <th>SCH_ENR_AS_F</th>
-      <th>SCH_ENR_HP_M</th>
-      <th>SCH_ENR_HP_F</th>
-      <th>SCH_ENR_BL_M</th>
-      <th>SCH_ENR_BL_F</th>
-      <th>SCH_ENR_WH_M</th>
-      <th>SCH_ENR_WH_F</th>
-      <th>SCH_ENR_TR_M</th>
-      <th>SCH_ENR_TR_F</th>
-      <th>TOT_ENR_M</th>
-      <th>TOT_ENR_F</th>
-      <th>SCH_ENR_LEP_M</th>
-      <th>SCH_ENR_LEP_F</th>
-      <th>SCH_ENR_IDEA_M</th>
-      <th>SCH_ENR_IDEA_F</th>
-      <th>SCH_DUAL_IND</th>
-      <th>SCH_DUALENR_HI_M</th>
-      <th>SCH_DUALENR_HI_F</th>
-      <th>...</th>
-      <th>SCH_APENR_AS_F</th>
-      <th>SCH_APENR_HP_M</th>
-      <th>SCH_APENR_HP_F</th>
-      <th>SCH_APENR_BL_M</th>
-      <th>SCH_APENR_BL_F</th>
-      <th>SCH_APENR_WH_M</th>
-      <th>SCH_APENR_WH_F</th>
-      <th>SCH_APENR_TR_M</th>
-      <th>SCH_APENR_TR_F</th>
-      <th>TOT_APENR_M</th>
-      <th>TOT_APENR_F</th>
-      <th>SCH_APENR_LEP_M</th>
-      <th>SCH_APENR_LEP_F</th>
-      <th>SCH_APENR_IDEA_M</th>
-      <th>SCH_APENR_IDEA_F</th>
-      <th>SCH_IBENR_IND</th>
-      <th>SCH_IBENR_HI_M</th>
-      <th>SCH_IBENR_HI_F</th>
-      <th>SCH_IBENR_AM_M</th>
       <th>SCH_IBENR_AM_F</th>
-      <th>SCH_IBENR_AS_M</th>
+      <th>SCH_IBENR_AM_M</th>
       <th>SCH_IBENR_AS_F</th>
-      <th>SCH_IBENR_HP_M</th>
-      <th>SCH_IBENR_HP_F</th>
-      <th>SCH_IBENR_BL_M</th>
+      <th>SCH_IBENR_AS_M</th>
       <th>SCH_IBENR_BL_F</th>
-      <th>SCH_IBENR_WH_M</th>
-      <th>SCH_IBENR_WH_F</th>
-      <th>SCH_IBENR_TR_M</th>
-      <th>SCH_IBENR_TR_F</th>
-      <th>TOT_IBENR_M</th>
-      <th>TOT_IBENR_F</th>
-      <th>SCH_IBENR_LEP_M</th>
-      <th>SCH_IBENR_LEP_F</th>
-      <th>SCH_IBENR_IDEA_M</th>
+      <th>SCH_IBENR_BL_M</th>
+      <th>SCH_IBENR_HI_F</th>
+      <th>SCH_IBENR_HI_M</th>
+      <th>SCH_IBENR_HP_F</th>
+      <th>SCH_IBENR_HP_M</th>
       <th>SCH_IBENR_IDEA_F</th>
-      <th>Low_Grade_Above9</th>
-      <th>High_Grade_12</th>
-      <th>TITLEI</th>
-      <th>STABR</th>
-      <th>SCH_TYPE_TEXT</th>
+      <th>SCH_IBENR_IDEA_M</th>
+      <th>SCH_IBENR_IND</th>
+      <th>SCH_IBENR_LEP_F</th>
+      <th>SCH_IBENR_LEP_M</th>
+      <th>SCH_IBENR_TR_F</th>
+      <th>SCH_IBENR_TR_M</th>
+      <th>SCH_IBENR_WH_F</th>
+      <th>SCH_IBENR_WH_M</th>
+      <th>SCH_NAME</th>
+      <th>SCH_STATUS_ALT</th>
+      <th>SCH_STATUS_CHARTER</th>
+      <th>SCH_STATUS_MAGNET</th>
+      <th>SCH_STATUS_SPED</th>
       <th>SCH_TYPE</th>
-      <th>LEVEL</th>
+      <th>SCH_TYPE_TEXT</th>
+      <th>SCH_UGDETAIL_HS</th>
+      <th>STABR</th>
+      <th>TITLEI</th>
+      <th>TOT_APENR_F</th>
+      <th>TOT_APENR_M</th>
+      <th>TOT_DUALENR_F</th>
+      <th>TOT_DUALENR_M</th>
+      <th>TOT_ENR_F</th>
+      <th>TOT_ENR_M</th>
+      <th>TOT_IBENR_F</th>
+      <th>TOT_IBENR_M</th>
       <th>VIRTUAL</th>
-      <th>GSLO</th>
-      <th>GSHI</th>
-      <th>NMCNTY15</th>
-      <th>LOCALE15</th>
-      <th>LAT1516</th>
-      <th>LON1516</th>
     </tr>
     <tr>
       <th>COMBOKEY</th>
@@ -16096,211 +16715,211 @@ Name: SCH_NAME, dtype: int64</pre>
   <tbody>
     <tr>
       <th>='362058000592'</th>
-      <td>NY</td>
-      <td>NEW YORK</td>
+      <td>12</td>
+      <td>9</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>40.7612</td>
       <td>3620580</td>
       <td>NEW YORK CITY PUBLIC SCHOOLS</td>
+      <td>NY</td>
+      <td>NEW YORK</td>
+      <td>3</td>
+      <td>11</td>
+      <td>-73.9952</td>
+      <td>UG-Yes</td>
+      <td>New York County</td>
       <td>592</td>
+      <td>0</td>
+      <td>0</td>
+      <td>17</td>
+      <td>5</td>
+      <td>11</td>
+      <td>5</td>
+      <td>32</td>
+      <td>14</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>65</td>
+      <td>32</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>beacon high school</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>92</td>
-      <td>191</td>
-      <td>0</td>
-      <td>8</td>
-      <td>23</td>
-      <td>77</td>
-      <td>0</td>
-      <td>2</td>
-      <td>53</td>
-      <td>125</td>
-      <td>281</td>
-      <td>407</td>
-      <td>17</td>
-      <td>29</td>
-      <td>466</td>
-      <td>839</td>
-      <td>2</td>
-      <td>2</td>
-      <td>64</td>
-      <td>43</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>...</td>
-      <td>17</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
-      <td>11</td>
-      <td>32</td>
-      <td>65</td>
-      <td>2</td>
-      <td>0</td>
-      <td>58</td>
-      <td>125</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>UG-Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>NY</td>
-      <td>Regular School</td>
       <td>1</td>
-      <td>3</td>
+      <td>Regular School</td>
+      <td>Yes</td>
+      <td>NY</td>
       <td>No</td>
-      <td>9</td>
-      <td>12</td>
-      <td>New York County</td>
-      <td>11</td>
-      <td>40.7612</td>
-      <td>-73.9952</td>
+      <td>125</td>
+      <td>58</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>839</td>
+      <td>466</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
     </tr>
     <tr>
       <th>='362058000592'</th>
-      <td>NY</td>
-      <td>NEW YORK</td>
+      <td>12</td>
+      <td>9</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>41.5145</td>
       <td>3620580</td>
       <td>NEW YORK CITY PUBLIC SCHOOLS</td>
+      <td>NY</td>
+      <td>NEW YORK</td>
+      <td>3</td>
+      <td>21</td>
+      <td>-73.9635</td>
+      <td>UG-Yes</td>
+      <td>Dutchess County</td>
       <td>592</td>
+      <td>0</td>
+      <td>0</td>
+      <td>17</td>
+      <td>5</td>
+      <td>11</td>
+      <td>5</td>
+      <td>32</td>
+      <td>14</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>65</td>
+      <td>32</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>beacon high school</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>92</td>
-      <td>191</td>
-      <td>0</td>
-      <td>8</td>
-      <td>23</td>
-      <td>77</td>
-      <td>0</td>
-      <td>2</td>
-      <td>53</td>
-      <td>125</td>
-      <td>281</td>
-      <td>407</td>
-      <td>17</td>
-      <td>29</td>
-      <td>466</td>
-      <td>839</td>
-      <td>2</td>
-      <td>2</td>
-      <td>64</td>
-      <td>43</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>...</td>
-      <td>17</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
-      <td>11</td>
-      <td>32</td>
-      <td>65</td>
-      <td>2</td>
-      <td>0</td>
-      <td>58</td>
-      <td>125</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>UG-Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>NY</td>
-      <td>Regular School</td>
       <td>1</td>
-      <td>3</td>
+      <td>Regular School</td>
+      <td>Yes</td>
+      <td>NY</td>
       <td>No</td>
-      <td>9</td>
-      <td>12</td>
-      <td>Dutchess County</td>
-      <td>21</td>
-      <td>41.5145</td>
-      <td>-73.9635</td>
+      <td>125</td>
+      <td>58</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>839</td>
+      <td>466</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
     </tr>
   </tbody>
 </table>
@@ -16316,7 +16935,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="prompt input_prompt">In&nbsp;[116]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">filter5_crdc_nces_1516</span><span class="p">[</span><span class="n">filter5_crdc_nces_1516</span><span class="o">.</span><span class="n">SCH_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;BEACON&#39;</span><span class="p">)]</span>
@@ -16332,7 +16951,7 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[98]:</div>
+<div class="prompt output_prompt">Out[116]:</div>
 
 
 
@@ -16489,7 +17108,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[99]:</div>
+<div class="prompt input_prompt">In&nbsp;[117]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Beacon High School in Dutchess County is already in the filter5 dataset -- Remove&quot;&quot;&quot;</span>
@@ -16504,7 +17123,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[118]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Dealing with Performance Learning Center&quot;&quot;&quot;</span>
@@ -16545,18 +17164,57 @@ Name: SCH_NAME, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>LEA_STATE</th>
-      <th>LEA_STATE_NAME</th>
+      <th>GSHI</th>
+      <th>GSLO</th>
+      <th>High_Grade_12</th>
+      <th>JJ</th>
+      <th>LAT1516</th>
       <th>LEAID</th>
       <th>LEA_NAME</th>
+      <th>LEA_STATE</th>
+      <th>LEA_STATE_NAME</th>
+      <th>LEVEL</th>
+      <th>LOCALE15</th>
+      <th>LON1516</th>
+      <th>Low_Grade_Above9</th>
+      <th>NMCNTY15</th>
       <th>SCHID</th>
-      <th>SCH_NAME</th>
-      <th>JJ</th>
-      <th>SCH_GRADE_PS</th>
-      <th>SCH_GRADE_KG</th>
-      <th>SCH_GRADE_G01</th>
-      <th>SCH_GRADE_G02</th>
-      <th>SCH_GRADE_G03</th>
+      <th>SCH_APENR_AM_F</th>
+      <th>SCH_APENR_AM_M</th>
+      <th>SCH_APENR_AS_F</th>
+      <th>SCH_APENR_AS_M</th>
+      <th>SCH_APENR_BL_F</th>
+      <th>SCH_APENR_BL_M</th>
+      <th>SCH_APENR_HI_F</th>
+      <th>SCH_APENR_HI_M</th>
+      <th>SCH_APENR_HP_F</th>
+      <th>SCH_APENR_HP_M</th>
+      <th>SCH_APENR_IDEA_F</th>
+      <th>SCH_APENR_IDEA_M</th>
+      <th>SCH_APENR_IND</th>
+      <th>SCH_APENR_LEP_F</th>
+      <th>SCH_APENR_LEP_M</th>
+      <th>SCH_APENR_TR_F</th>
+      <th>SCH_APENR_TR_M</th>
+      <th>SCH_APENR_WH_F</th>
+      <th>SCH_APENR_WH_M</th>
+      <th>SCH_DUALENR_AM_F</th>
+      <th>SCH_DUALENR_AM_M</th>
+      <th>SCH_DUALENR_AS_F</th>
+      <th>SCH_DUALENR_AS_M</th>
+      <th>SCH_DUALENR_BL_F</th>
+      <th>SCH_DUALENR_BL_M</th>
+      <th>SCH_DUALENR_HI_F</th>
+      <th>SCH_DUALENR_HI_M</th>
+      <th>SCH_DUALENR_HP_F</th>
+      <th>SCH_DUALENR_HP_M</th>
+      <th>SCH_DUALENR_IDEA_F</th>
+      <th>SCH_DUALENR_IDEA_M</th>
+      <th>SCH_DUALENR_LEP_F</th>
+      <th>SCH_DUALENR_LEP_M</th>
+      <th>SCH_DUALENR_TR_F</th>
+      <th>SCH_DUALENR_TR_M</th>
+      <th>...</th>
       <th>SCH_GRADE_G04</th>
       <th>SCH_GRADE_G05</th>
       <th>SCH_GRADE_G06</th>
@@ -16566,86 +17224,47 @@ Name: SCH_NAME, dtype: int64</pre>
       <th>SCH_GRADE_G10</th>
       <th>SCH_GRADE_G11</th>
       <th>SCH_GRADE_G12</th>
+      <th>SCH_GRADE_KG</th>
+      <th>SCH_GRADE_PS</th>
       <th>SCH_GRADE_UG</th>
-      <th>SCH_UGDETAIL_HS</th>
-      <th>SCH_STATUS_SPED</th>
-      <th>SCH_STATUS_MAGNET</th>
-      <th>SCH_STATUS_CHARTER</th>
-      <th>SCH_STATUS_ALT</th>
-      <th>SCH_ENR_HI_M</th>
-      <th>SCH_ENR_HI_F</th>
-      <th>SCH_ENR_AM_M</th>
-      <th>SCH_ENR_AM_F</th>
-      <th>SCH_ENR_AS_M</th>
-      <th>SCH_ENR_AS_F</th>
-      <th>SCH_ENR_HP_M</th>
-      <th>SCH_ENR_HP_F</th>
-      <th>SCH_ENR_BL_M</th>
-      <th>SCH_ENR_BL_F</th>
-      <th>SCH_ENR_WH_M</th>
-      <th>SCH_ENR_WH_F</th>
-      <th>SCH_ENR_TR_M</th>
-      <th>SCH_ENR_TR_F</th>
-      <th>TOT_ENR_M</th>
-      <th>TOT_ENR_F</th>
-      <th>SCH_ENR_LEP_M</th>
-      <th>SCH_ENR_LEP_F</th>
-      <th>SCH_ENR_IDEA_M</th>
-      <th>SCH_ENR_IDEA_F</th>
-      <th>SCH_DUAL_IND</th>
-      <th>SCH_DUALENR_HI_M</th>
-      <th>SCH_DUALENR_HI_F</th>
-      <th>...</th>
-      <th>SCH_APENR_AS_F</th>
-      <th>SCH_APENR_HP_M</th>
-      <th>SCH_APENR_HP_F</th>
-      <th>SCH_APENR_BL_M</th>
-      <th>SCH_APENR_BL_F</th>
-      <th>SCH_APENR_WH_M</th>
-      <th>SCH_APENR_WH_F</th>
-      <th>SCH_APENR_TR_M</th>
-      <th>SCH_APENR_TR_F</th>
-      <th>TOT_APENR_M</th>
-      <th>TOT_APENR_F</th>
-      <th>SCH_APENR_LEP_M</th>
-      <th>SCH_APENR_LEP_F</th>
-      <th>SCH_APENR_IDEA_M</th>
-      <th>SCH_APENR_IDEA_F</th>
-      <th>SCH_IBENR_IND</th>
-      <th>SCH_IBENR_HI_M</th>
-      <th>SCH_IBENR_HI_F</th>
-      <th>SCH_IBENR_AM_M</th>
       <th>SCH_IBENR_AM_F</th>
-      <th>SCH_IBENR_AS_M</th>
+      <th>SCH_IBENR_AM_M</th>
       <th>SCH_IBENR_AS_F</th>
-      <th>SCH_IBENR_HP_M</th>
-      <th>SCH_IBENR_HP_F</th>
-      <th>SCH_IBENR_BL_M</th>
+      <th>SCH_IBENR_AS_M</th>
       <th>SCH_IBENR_BL_F</th>
-      <th>SCH_IBENR_WH_M</th>
-      <th>SCH_IBENR_WH_F</th>
-      <th>SCH_IBENR_TR_M</th>
-      <th>SCH_IBENR_TR_F</th>
-      <th>TOT_IBENR_M</th>
-      <th>TOT_IBENR_F</th>
-      <th>SCH_IBENR_LEP_M</th>
-      <th>SCH_IBENR_LEP_F</th>
-      <th>SCH_IBENR_IDEA_M</th>
+      <th>SCH_IBENR_BL_M</th>
+      <th>SCH_IBENR_HI_F</th>
+      <th>SCH_IBENR_HI_M</th>
+      <th>SCH_IBENR_HP_F</th>
+      <th>SCH_IBENR_HP_M</th>
       <th>SCH_IBENR_IDEA_F</th>
-      <th>Low_Grade_Above9</th>
-      <th>High_Grade_12</th>
-      <th>TITLEI</th>
-      <th>STABR</th>
-      <th>SCH_TYPE_TEXT</th>
+      <th>SCH_IBENR_IDEA_M</th>
+      <th>SCH_IBENR_IND</th>
+      <th>SCH_IBENR_LEP_F</th>
+      <th>SCH_IBENR_LEP_M</th>
+      <th>SCH_IBENR_TR_F</th>
+      <th>SCH_IBENR_TR_M</th>
+      <th>SCH_IBENR_WH_F</th>
+      <th>SCH_IBENR_WH_M</th>
+      <th>SCH_NAME</th>
+      <th>SCH_STATUS_ALT</th>
+      <th>SCH_STATUS_CHARTER</th>
+      <th>SCH_STATUS_MAGNET</th>
+      <th>SCH_STATUS_SPED</th>
       <th>SCH_TYPE</th>
-      <th>LEVEL</th>
+      <th>SCH_TYPE_TEXT</th>
+      <th>SCH_UGDETAIL_HS</th>
+      <th>STABR</th>
+      <th>TITLEI</th>
+      <th>TOT_APENR_F</th>
+      <th>TOT_APENR_M</th>
+      <th>TOT_DUALENR_F</th>
+      <th>TOT_DUALENR_M</th>
+      <th>TOT_ENR_F</th>
+      <th>TOT_ENR_M</th>
+      <th>TOT_IBENR_F</th>
+      <th>TOT_IBENR_M</th>
       <th>VIRTUAL</th>
-      <th>GSLO</th>
-      <th>GSHI</th>
-      <th>NMCNTY15</th>
-      <th>LOCALE15</th>
-      <th>LAT1516</th>
-      <th>LON1516</th>
     </tr>
     <tr>
       <th>COMBOKEY</th>
@@ -16755,211 +17374,211 @@ Name: SCH_NAME, dtype: int64</pre>
   <tbody>
     <tr>
       <th>='130129003727'</th>
-      <td>GA</td>
-      <td>GEORGIA</td>
+      <td>12</td>
+      <td>9</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>33.4739</td>
       <td>1301290</td>
       <td>Cobb County</td>
+      <td>GA</td>
+      <td>GEORGIA</td>
+      <td>3</td>
+      <td>12</td>
+      <td>-81.9974</td>
+      <td>Yes</td>
+      <td>Richmond County</td>
       <td>3727</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>performance learning center</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>11</td>
-      <td>14</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>23</td>
-      <td>17</td>
-      <td>29</td>
-      <td>14</td>
-      <td>2</td>
-      <td>2</td>
-      <td>65</td>
-      <td>49</td>
-      <td>2</td>
-      <td>0</td>
-      <td>10</td>
-      <td>4</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>GA</td>
-      <td>Regular School</td>
       <td>1</td>
-      <td>3</td>
+      <td>Regular School</td>
+      <td>-9</td>
+      <td>GA</td>
+      <td>Yes</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>49</td>
+      <td>65</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>No</td>
-      <td>9</td>
-      <td>12</td>
-      <td>Richmond County</td>
-      <td>12</td>
-      <td>33.4739</td>
-      <td>-81.9974</td>
     </tr>
     <tr>
       <th>='130270003728'</th>
-      <td>GA</td>
-      <td>GEORGIA</td>
+      <td>12</td>
+      <td>9</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>33.4739</td>
       <td>1302700</td>
       <td>Harris County</td>
+      <td>GA</td>
+      <td>GEORGIA</td>
+      <td>3</td>
+      <td>12</td>
+      <td>-81.9974</td>
+      <td>Yes</td>
+      <td>Richmond County</td>
       <td>3728</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>5</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>No</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>performance learning center</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
       <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>11</td>
-      <td>8</td>
-      <td>32</td>
-      <td>32</td>
-      <td>2</td>
-      <td>2</td>
-      <td>47</td>
-      <td>44</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-2</td>
-      <td>-2</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>2</td>
-      <td>...</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>GA</td>
-      <td>Regular School</td>
       <td>1</td>
-      <td>3</td>
+      <td>Regular School</td>
+      <td>-9</td>
+      <td>GA</td>
+      <td>Yes</td>
+      <td>-9</td>
+      <td>-9</td>
+      <td>17</td>
+      <td>10</td>
+      <td>44</td>
+      <td>47</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>No</td>
-      <td>9</td>
-      <td>12</td>
-      <td>Richmond County</td>
-      <td>12</td>
-      <td>33.4739</td>
-      <td>-81.9974</td>
     </tr>
   </tbody>
 </table>
@@ -16975,7 +17594,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[101]:</div>
+<div class="prompt input_prompt">In&nbsp;[119]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">filter5_crdc_nces_1516</span><span class="p">[</span><span class="n">filter5_crdc_nces_1516</span><span class="o">.</span><span class="n">SCH_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Performance&#39;</span><span class="p">)]</span>
@@ -16991,7 +17610,7 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[101]:</div>
+<div class="prompt output_prompt">Out[119]:</div>
 
 
 
@@ -17172,7 +17791,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="prompt input_prompt">In&nbsp;[120]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Both of the performance learning centers here actually matched to a different &#39;performance learning center&#39; record;</span>
@@ -17187,7 +17806,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[103]:</div>
+<div class="prompt input_prompt">In&nbsp;[121]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Dealing with university high&quot;&quot;&quot;</span>
@@ -17228,18 +17847,57 @@ Name: SCH_NAME, dtype: int64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>LEA_STATE</th>
-      <th>LEA_STATE_NAME</th>
+      <th>GSHI</th>
+      <th>GSLO</th>
+      <th>High_Grade_12</th>
+      <th>JJ</th>
+      <th>LAT1516</th>
       <th>LEAID</th>
       <th>LEA_NAME</th>
+      <th>LEA_STATE</th>
+      <th>LEA_STATE_NAME</th>
+      <th>LEVEL</th>
+      <th>LOCALE15</th>
+      <th>LON1516</th>
+      <th>Low_Grade_Above9</th>
+      <th>NMCNTY15</th>
       <th>SCHID</th>
-      <th>SCH_NAME</th>
-      <th>JJ</th>
-      <th>SCH_GRADE_PS</th>
-      <th>SCH_GRADE_KG</th>
-      <th>SCH_GRADE_G01</th>
-      <th>SCH_GRADE_G02</th>
-      <th>SCH_GRADE_G03</th>
+      <th>SCH_APENR_AM_F</th>
+      <th>SCH_APENR_AM_M</th>
+      <th>SCH_APENR_AS_F</th>
+      <th>SCH_APENR_AS_M</th>
+      <th>SCH_APENR_BL_F</th>
+      <th>SCH_APENR_BL_M</th>
+      <th>SCH_APENR_HI_F</th>
+      <th>SCH_APENR_HI_M</th>
+      <th>SCH_APENR_HP_F</th>
+      <th>SCH_APENR_HP_M</th>
+      <th>SCH_APENR_IDEA_F</th>
+      <th>SCH_APENR_IDEA_M</th>
+      <th>SCH_APENR_IND</th>
+      <th>SCH_APENR_LEP_F</th>
+      <th>SCH_APENR_LEP_M</th>
+      <th>SCH_APENR_TR_F</th>
+      <th>SCH_APENR_TR_M</th>
+      <th>SCH_APENR_WH_F</th>
+      <th>SCH_APENR_WH_M</th>
+      <th>SCH_DUALENR_AM_F</th>
+      <th>SCH_DUALENR_AM_M</th>
+      <th>SCH_DUALENR_AS_F</th>
+      <th>SCH_DUALENR_AS_M</th>
+      <th>SCH_DUALENR_BL_F</th>
+      <th>SCH_DUALENR_BL_M</th>
+      <th>SCH_DUALENR_HI_F</th>
+      <th>SCH_DUALENR_HI_M</th>
+      <th>SCH_DUALENR_HP_F</th>
+      <th>SCH_DUALENR_HP_M</th>
+      <th>SCH_DUALENR_IDEA_F</th>
+      <th>SCH_DUALENR_IDEA_M</th>
+      <th>SCH_DUALENR_LEP_F</th>
+      <th>SCH_DUALENR_LEP_M</th>
+      <th>SCH_DUALENR_TR_F</th>
+      <th>SCH_DUALENR_TR_M</th>
+      <th>...</th>
       <th>SCH_GRADE_G04</th>
       <th>SCH_GRADE_G05</th>
       <th>SCH_GRADE_G06</th>
@@ -17249,86 +17907,47 @@ Name: SCH_NAME, dtype: int64</pre>
       <th>SCH_GRADE_G10</th>
       <th>SCH_GRADE_G11</th>
       <th>SCH_GRADE_G12</th>
+      <th>SCH_GRADE_KG</th>
+      <th>SCH_GRADE_PS</th>
       <th>SCH_GRADE_UG</th>
-      <th>SCH_UGDETAIL_HS</th>
-      <th>SCH_STATUS_SPED</th>
-      <th>SCH_STATUS_MAGNET</th>
-      <th>SCH_STATUS_CHARTER</th>
-      <th>SCH_STATUS_ALT</th>
-      <th>SCH_ENR_HI_M</th>
-      <th>SCH_ENR_HI_F</th>
-      <th>SCH_ENR_AM_M</th>
-      <th>SCH_ENR_AM_F</th>
-      <th>SCH_ENR_AS_M</th>
-      <th>SCH_ENR_AS_F</th>
-      <th>SCH_ENR_HP_M</th>
-      <th>SCH_ENR_HP_F</th>
-      <th>SCH_ENR_BL_M</th>
-      <th>SCH_ENR_BL_F</th>
-      <th>SCH_ENR_WH_M</th>
-      <th>SCH_ENR_WH_F</th>
-      <th>SCH_ENR_TR_M</th>
-      <th>SCH_ENR_TR_F</th>
-      <th>TOT_ENR_M</th>
-      <th>TOT_ENR_F</th>
-      <th>SCH_ENR_LEP_M</th>
-      <th>SCH_ENR_LEP_F</th>
-      <th>SCH_ENR_IDEA_M</th>
-      <th>SCH_ENR_IDEA_F</th>
-      <th>SCH_DUAL_IND</th>
-      <th>SCH_DUALENR_HI_M</th>
-      <th>SCH_DUALENR_HI_F</th>
-      <th>...</th>
-      <th>SCH_APENR_AS_F</th>
-      <th>SCH_APENR_HP_M</th>
-      <th>SCH_APENR_HP_F</th>
-      <th>SCH_APENR_BL_M</th>
-      <th>SCH_APENR_BL_F</th>
-      <th>SCH_APENR_WH_M</th>
-      <th>SCH_APENR_WH_F</th>
-      <th>SCH_APENR_TR_M</th>
-      <th>SCH_APENR_TR_F</th>
-      <th>TOT_APENR_M</th>
-      <th>TOT_APENR_F</th>
-      <th>SCH_APENR_LEP_M</th>
-      <th>SCH_APENR_LEP_F</th>
-      <th>SCH_APENR_IDEA_M</th>
-      <th>SCH_APENR_IDEA_F</th>
-      <th>SCH_IBENR_IND</th>
-      <th>SCH_IBENR_HI_M</th>
-      <th>SCH_IBENR_HI_F</th>
-      <th>SCH_IBENR_AM_M</th>
       <th>SCH_IBENR_AM_F</th>
-      <th>SCH_IBENR_AS_M</th>
+      <th>SCH_IBENR_AM_M</th>
       <th>SCH_IBENR_AS_F</th>
-      <th>SCH_IBENR_HP_M</th>
-      <th>SCH_IBENR_HP_F</th>
-      <th>SCH_IBENR_BL_M</th>
+      <th>SCH_IBENR_AS_M</th>
       <th>SCH_IBENR_BL_F</th>
-      <th>SCH_IBENR_WH_M</th>
-      <th>SCH_IBENR_WH_F</th>
-      <th>SCH_IBENR_TR_M</th>
-      <th>SCH_IBENR_TR_F</th>
-      <th>TOT_IBENR_M</th>
-      <th>TOT_IBENR_F</th>
-      <th>SCH_IBENR_LEP_M</th>
-      <th>SCH_IBENR_LEP_F</th>
-      <th>SCH_IBENR_IDEA_M</th>
+      <th>SCH_IBENR_BL_M</th>
+      <th>SCH_IBENR_HI_F</th>
+      <th>SCH_IBENR_HI_M</th>
+      <th>SCH_IBENR_HP_F</th>
+      <th>SCH_IBENR_HP_M</th>
       <th>SCH_IBENR_IDEA_F</th>
-      <th>Low_Grade_Above9</th>
-      <th>High_Grade_12</th>
-      <th>TITLEI</th>
-      <th>STABR</th>
-      <th>SCH_TYPE_TEXT</th>
+      <th>SCH_IBENR_IDEA_M</th>
+      <th>SCH_IBENR_IND</th>
+      <th>SCH_IBENR_LEP_F</th>
+      <th>SCH_IBENR_LEP_M</th>
+      <th>SCH_IBENR_TR_F</th>
+      <th>SCH_IBENR_TR_M</th>
+      <th>SCH_IBENR_WH_F</th>
+      <th>SCH_IBENR_WH_M</th>
+      <th>SCH_NAME</th>
+      <th>SCH_STATUS_ALT</th>
+      <th>SCH_STATUS_CHARTER</th>
+      <th>SCH_STATUS_MAGNET</th>
+      <th>SCH_STATUS_SPED</th>
       <th>SCH_TYPE</th>
-      <th>LEVEL</th>
+      <th>SCH_TYPE_TEXT</th>
+      <th>SCH_UGDETAIL_HS</th>
+      <th>STABR</th>
+      <th>TITLEI</th>
+      <th>TOT_APENR_F</th>
+      <th>TOT_APENR_M</th>
+      <th>TOT_DUALENR_F</th>
+      <th>TOT_DUALENR_M</th>
+      <th>TOT_ENR_F</th>
+      <th>TOT_ENR_M</th>
+      <th>TOT_IBENR_F</th>
+      <th>TOT_IBENR_M</th>
       <th>VIRTUAL</th>
-      <th>GSLO</th>
-      <th>GSHI</th>
-      <th>NMCNTY15</th>
-      <th>LOCALE15</th>
-      <th>LAT1516</th>
-      <th>LON1516</th>
     </tr>
     <tr>
       <th>COMBOKEY</th>
@@ -17438,72 +18057,68 @@ Name: SCH_NAME, dtype: int64</pre>
   <tbody>
     <tr>
       <th>='069902400001'</th>
-      <td>CA</td>
-      <td>CALIFORNIA</td>
+      <td>12</td>
+      <td>9</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>36.8097</td>
       <td>699024</td>
       <td>University High School</td>
-      <td>1</td>
-      <td>university high</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>53</td>
-      <td>68</td>
-      <td>5</td>
-      <td>5</td>
-      <td>77</td>
-      <td>98</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
+      <td>CA</td>
+      <td>CALIFORNIA</td>
+      <td>3</td>
       <td>11</td>
-      <td>77</td>
-      <td>89</td>
-      <td>0</td>
-      <td>0</td>
-      <td>217</td>
-      <td>271</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-2</td>
-      <td>-2</td>
+      <td>-119.748</td>
       <td>Yes</td>
-      <td>38</td>
-      <td>50</td>
-      <td>...</td>
+      <td>Fresno County</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
       <td>47</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
+      <td>29</td>
       <td>8</td>
-      <td>44</td>
+      <td>5</td>
+      <td>26</td>
+      <td>23</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>50</td>
+      <td>44</td>
+      <td>2</td>
+      <td>5</td>
+      <td>68</td>
+      <td>50</td>
+      <td>8</td>
+      <td>5</td>
+      <td>50</td>
+      <td>38</td>
       <td>0</td>
-      <td>0</td>
-      <td>103</td>
-      <td>133</td>
       <td>0</td>
       <td>0</td>
       <td>2</td>
       <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
       <td>No</td>
       <td>-9</td>
       <td>-9</td>
@@ -17517,97 +18132,97 @@ Name: SCH_NAME, dtype: int64</pre>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
+      <td>No</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
+      <td>university high</td>
+      <td>No</td>
       <td>Yes</td>
-      <td>Yes</td>
-      <td>Missing</td>
-      <td>CA</td>
-      <td>Regular School</td>
+      <td>No</td>
+      <td>No</td>
       <td>1</td>
-      <td>3</td>
+      <td>Regular School</td>
+      <td>-9</td>
+      <td>CA</td>
+      <td>Missing</td>
+      <td>133</td>
+      <td>103</td>
+      <td>196</td>
+      <td>163</td>
+      <td>271</td>
+      <td>217</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>No</td>
-      <td>9</td>
-      <td>12</td>
-      <td>Fresno County</td>
-      <td>11</td>
-      <td>36.8097</td>
-      <td>-119.748</td>
     </tr>
     <tr>
       <th>='069902400001'</th>
-      <td>CA</td>
-      <td>CALIFORNIA</td>
+      <td>12</td>
+      <td>9</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>33.6513</td>
       <td>699024</td>
       <td>University High School</td>
+      <td>CA</td>
+      <td>CALIFORNIA</td>
+      <td>3</td>
+      <td>12</td>
+      <td>-117.823</td>
+      <td>Yes</td>
+      <td>Orange County</td>
       <td>1</td>
-      <td>university high</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>-9</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>53</td>
-      <td>68</td>
-      <td>5</td>
-      <td>5</td>
-      <td>77</td>
-      <td>98</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
-      <td>11</td>
-      <td>77</td>
-      <td>89</td>
-      <td>0</td>
-      <td>0</td>
-      <td>217</td>
-      <td>271</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-2</td>
-      <td>-2</td>
-      <td>Yes</td>
-      <td>38</td>
-      <td>50</td>
-      <td>...</td>
+      <td>2</td>
+      <td>2</td>
       <td>47</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
+      <td>29</td>
       <td>8</td>
-      <td>44</td>
+      <td>5</td>
+      <td>26</td>
+      <td>23</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Yes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>50</td>
+      <td>44</td>
+      <td>2</td>
+      <td>5</td>
+      <td>68</td>
+      <td>50</td>
+      <td>8</td>
+      <td>5</td>
+      <td>50</td>
+      <td>38</td>
       <td>0</td>
-      <td>0</td>
-      <td>103</td>
-      <td>133</td>
       <td>0</td>
       <td>0</td>
       <td>2</td>
       <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
       <td>No</td>
       <td>-9</td>
       <td>-9</td>
@@ -17621,28 +18236,32 @@ Name: SCH_NAME, dtype: int64</pre>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
+      <td>No</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
       <td>-9</td>
-      <td>-9</td>
-      <td>-9</td>
+      <td>university high</td>
+      <td>No</td>
       <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>CA</td>
-      <td>Regular School</td>
+      <td>No</td>
+      <td>No</td>
       <td>1</td>
-      <td>3</td>
+      <td>Regular School</td>
+      <td>-9</td>
+      <td>CA</td>
+      <td>Yes</td>
+      <td>133</td>
+      <td>103</td>
+      <td>196</td>
+      <td>163</td>
+      <td>271</td>
+      <td>217</td>
+      <td>-9</td>
+      <td>-9</td>
       <td>No</td>
-      <td>9</td>
-      <td>12</td>
-      <td>Orange County</td>
-      <td>12</td>
-      <td>33.6513</td>
-      <td>-117.823</td>
     </tr>
   </tbody>
 </table>
@@ -17658,7 +18277,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="prompt input_prompt">In&nbsp;[122]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">filter5_crdc_nces_1516</span><span class="p">[</span><span class="n">filter5_crdc_nces_1516</span><span class="o">.</span><span class="n">SCH_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;University High&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -17674,7 +18293,7 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[104]:</div>
+<div class="prompt output_prompt">Out[122]:</div>
 
 
 
@@ -17879,7 +18498,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[105]:</div>
+<div class="prompt input_prompt">In&nbsp;[123]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;The University High in Irvine was already accounted for; therefore, needs to be removed from the recovered&quot;&quot;&quot;</span>
@@ -17893,7 +18512,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[106]:</div>
+<div class="prompt input_prompt">In&nbsp;[124]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="s1">&#39;How many final recovered values?&#39;</span>
@@ -17910,13 +18529,13 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[106]:</div>
+<div class="prompt output_prompt">Out[124]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>453</pre>
+<pre>468</pre>
 </div>
 
 </div>
@@ -17931,16 +18550,16 @@ Name: SCH_NAME, dtype: int64</pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="&lt;font-color-=-green&gt;-VI.-Concatenating-Recovered-Missing-Values-with-the-original-Filtered-Dataset-&lt;/font&gt;">&lt;font color = green&gt; VI. Concatenating Recovered Missing Values with the original Filtered Dataset &lt;/font&gt;<a class="anchor-link" href="#&lt;font-color-=-green&gt;-VI.-Concatenating-Recovered-Missing-Values-with-the-original-Filtered-Dataset-&lt;/font&gt;">&#182;</a></h1><p>&lt;div class = 'alert alert-cell alert-info'&gt; Finally, I concatenated the recovered high schools with the original filtered set.<br><br></p>
 <p>I ensured that no duplicate values were added in the process.</p>
-<p>Then saved the file to "../filtered_data/04_intial_filter.csv" &lt;/div&gt;</p>
+<p>Then saved the file to "../filtered_data/04_filter_final.csv" &lt;/div&gt;</p>
 <p>&lt;div class = 'alert alert-cell alert-warning'&gt;
-Final Total:  <strong>15710 High Schools</strong></p>
+Final Total:  <strong>15725 High Schools</strong></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[107]:</div>
+<div class="prompt input_prompt">In&nbsp;[125]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Remove the missing values&quot;&quot;&quot;</span>
@@ -17955,7 +18574,7 @@ Final Total:  <strong>15710 High Schools</strong></p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="prompt input_prompt">In&nbsp;[126]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;How many initial Duplicates?</span>
@@ -17974,7 +18593,7 @@ Final Total:  <strong>15710 High Schools</strong></p>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[108]:</div>
+<div class="prompt output_prompt">Out[126]:</div>
 
 
 
@@ -17997,7 +18616,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[109]:</div>
+<div class="prompt input_prompt">In&nbsp;[127]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">recovered_schools_filter4</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;STABR&#39;</span><span class="p">,</span><span class="s1">&#39;SCH_NAME&#39;</span><span class="p">,</span><span class="s1">&#39;NMCNTY15&#39;</span><span class="p">])[</span><span class="s1">&#39;SCH_NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -18013,18 +18632,18 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[109]:</div>
+<div class="prompt output_prompt">Out[127]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>STABR  SCH_NAME                           NMCNTY15       
-TX     ischool high of hickory creek      Denton County      1
-NY     bronx high school of business      Bronx County       1
-       baruch college campus high school  New York County    1
-       bayside high school                Queens County      1
-       beacon high school                 New York County    1
+<pre>STABR  SCH_NAME                        NMCNTY15     
+TX     ischool high of hickory creek   Denton County    1
+NY     bronx compass high school       Bronx County     1
+       benjamin banneker academy       Kings County     1
+       benjamin n cardozo high school  Queens County    1
+       boys and girls high school      Kings County     1
 Name: SCH_NAME, dtype: int64</pre>
 </div>
 
@@ -18036,7 +18655,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="prompt input_prompt">In&nbsp;[128]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filtered_and_recovered = pd.concat([filter6_crdc_nces_1516, recovered_schools_filter4])</span>
@@ -18050,7 +18669,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="prompt input_prompt">In&nbsp;[129]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Do the numbers of columns match?&quot;&quot;&quot;</span>
@@ -18079,7 +18698,7 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[111]:</div>
+<div class="prompt output_prompt">Out[129]:</div>
 
 
 
@@ -18096,7 +18715,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[112]:</div>
+<div class="prompt input_prompt">In&nbsp;[130]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Because Columns are stored as dictionaries, there is no inherent order to the columns -- Pandas automatically </span>
@@ -18113,7 +18732,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="prompt input_prompt">In&nbsp;[131]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;No added duplicate records&quot;&quot;&quot;</span>
@@ -18130,17 +18749,17 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[113]:</div>
+<div class="prompt output_prompt">Out[131]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>STABR  SCH_NAME                    NMCNTY15      
-TX     LEE H S                     Harris County     2
-       TAYLOR H S                  Harris County     2
-       STERLING H S                Harris County     2
+TX     STERLING H S                Harris County     2
 MO     ADAIR CO. HIGH              Adair County      2
+TX     TAYLOR H S                  Harris County     2
+       LEE H S                     Harris County     2
 WY     Wyoming Indian High School  Fremont County    1
 Name: SCH_NAME, dtype: int64</pre>
 </div>
@@ -18153,20 +18772,7 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[114]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filtered_and_recovered.to_csv(&#39;../filtered_data/04_inital_filter.csv&#39;)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[115]:</div>
+<div class="prompt input_prompt">In&nbsp;[132]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="s2">&quot;How many total high schools in the set?&quot;</span>
@@ -18183,13 +18789,13 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[115]:</div>
+<div class="prompt output_prompt">Out[132]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>15710</pre>
+<pre>15725</pre>
 </div>
 
 </div>
@@ -18200,10 +18806,46 @@ Name: SCH_NAME, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[116]:</div>
+<div class="prompt input_prompt">In&nbsp;[133]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">filtered_and_recovered</span><span class="o">.</span><span class="n">SCH_DUAL_IND</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filtered_and_recovered.to_csv(&#39;../filtered_data/04_filter_final.csv&#39;)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Final-Missing-Schools">Final Missing Schools<a class="anchor-link" href="#Final-Missing-Schools">&#182;</a></h1><p>&lt;div class = 'alert alert-cell alert-info'&gt;<strong>348 Schools</strong><br> Saved to '04_final_missing.csv'</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[134]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">final_missing</span> <span class="o">=</span> <span class="n">schname_combined</span><span class="p">[(</span><span class="n">schname_combined</span><span class="o">.</span><span class="n">SCH_NAME_</span><span class="o">.</span><span class="n">isnull</span><span class="p">())</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">schname_combined</span><span class="o">.</span><span class="n">LEA_NAME</span> <span class="o">!=</span> <span class="s1">&#39;NEW YORK CITY PUBLIC SCHOOLS&#39;</span><span class="p">)]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[135]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot; How many final missing schools? &quot;&quot;&quot;</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">final_missing</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -18216,15 +18858,13 @@ Name: SCH_NAME, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[116]:</div>
+<div class="prompt output_prompt">Out[135]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Yes    11558
-No      4152
-Name: SCH_DUAL_IND, dtype: int64</pre>
+<pre>348</pre>
 </div>
 
 </div>
@@ -18235,10 +18875,24 @@ Name: SCH_DUAL_IND, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="prompt input_prompt">In&nbsp;[136]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">11558</span> <span class="o">/</span> <span class="p">(</span><span class="mi">11558</span> <span class="o">+</span> <span class="mi">4152</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">final_missing</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../filtered_data/04_final_missing.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[137]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot; Top remaining unaccounted districts &quot;&quot;&quot;</span>
+<span class="n">final_missing</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;LEA_NAME&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -18251,116 +18905,24 @@ Name: SCH_DUAL_IND, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[117]:</div>
+<div class="prompt output_prompt">Out[137]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0.7357097390197327</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[118]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">filtered_and_recovered</span><span class="o">.</span><span class="n">SCH_APENR_IND</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[118]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>Yes    11520
-No      4190
-Name: SCH_APENR_IND, dtype: int64</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[120]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">11520</span> <span class="o">/</span> <span class="p">(</span><span class="mi">11520</span> <span class="o">+</span> <span class="mi">4190</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[120]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0.7332908975175048</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[119]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">filtered_and_recovered</span><span class="o">.</span><span class="n">SCH_IBENR_IND</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[119]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>No     14911
-Yes      799
-Name: SCH_IBENR_IND, dtype: int64</pre>
+<pre>LEA_NAME
+NORMAN                                                     9
+Peters Township SD                                         6
+Dept. of Svs. for Children Youth &amp; Their Families          5
+Boston                                                     4
+OFFICE OF EDUCATION DEPARTMENT OF CHILDREN AND FAMILIES    4
+WINDSOR SCHOOL DISTRICT                                    3
+Cherokee County                                            3
+NASSAU BOCES                                               3
+ERIE 2-CHAUTAUQUA-CATTARAUGUS BOCES                        3
+Geauga County Educational Service Center                   3
+Name: LEAID, dtype: int64</pre>
 </div>
 
 </div>
