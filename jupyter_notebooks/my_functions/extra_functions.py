@@ -191,3 +191,30 @@ def add_de_ap_pcts(df_input):
              'Neither_AP_DE', 'Neither_AP_DE %', 'Both_AP_DE', 'Both_AP_DE %', 'Total']
 
     return df[order]
+
+def flag_grouper(dataset, groupby_col, ap_or_de, keep_index=False):
+    """ inputs: dataset (pandas.DataFrame), groupby_col (column name that
+            should be grouped on), ap_or_de ('AP' for AP Stats, 'DE' for DE Stats),
+            keep_index (retain the native index if set to True).
+
+        returns:  DataFrame containing AP/DE Stats for the groupby_col"""
+    if ap_or_de == 'DE':
+        second_group = 'SCH_DUAL_IND'
+    elif ap_or_de == 'AP':
+        second_group = 'SCH_APENR_IND'
+    else:
+        print('Error in ap_or_de term.')
+        return
+
+    flag_group = dataset.groupby([groupby_col, second_group])['LEAID'].count().unstack().reset_index()
+
+    flag_group['# of HS Schools'] = (flag_group['Yes'] + flag_group['No'])
+    flag_group[ap_or_de + ' Offering Rate'] = round(flag_group['Yes'] / (flag_group['Yes'] + flag_group['No']) * 100, 1)
+    flag_group = flag_group.rename({'Yes': '# of ' + ap_or_de +  ' Schools'}, axis=1)
+    flag_group = flag_group.drop(['No'], axis = 1)
+
+    order = [groupby_col, '# of HS Schools', '# of ' + ap_or_de +  ' Schools', ap_or_de + ' Offering Rate']
+
+    if keep_index:
+        return flag_group[order]
+    return flag_group[order[1:]]
