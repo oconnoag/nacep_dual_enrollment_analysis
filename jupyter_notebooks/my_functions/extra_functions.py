@@ -218,3 +218,107 @@ def flag_grouper(dataset, groupby_col, ap_or_de, keep_index=False):
     if keep_index:
         return flag_group[order]
     return flag_group[order[1:]]
+
+def missing_value_mapper(value):
+    """Converts any negative number into 0, as these negative numbers represent missing/null values"""
+    if isinstance(value, int):
+        if value < 0:
+            return 0
+    return value
+
+def school_grade_range(df):
+    """Calculates the number of schools in a given DataFrame (df) of a particular distribution of grades:
+        Example:  If a school (in df) offers grades 9,10,11,12 exclusively, they are placed in the '9-12'
+                    category. """
+    df_grade_range = []
+    for index, row in df.iterrows():
+        grade_range = []
+
+        if row.SCH_GRADE_G12 == 'Yes':
+            grade_range.append(12)
+        if row.SCH_GRADE_G11 == 'Yes':
+            grade_range.append(11)
+        if row.SCH_GRADE_G10 == 'Yes':
+            grade_range.append(10)
+        if row.SCH_GRADE_G09 == 'Yes':
+            grade_range.append(9)
+        if row.SCH_GRADE_G08 == 'Yes':
+            grade_range.append(8)
+        if row.SCH_GRADE_G07 == 'Yes':
+            grade_range.append(7)
+        if row.SCH_GRADE_G06 == 'Yes':
+            grade_range.append(6)
+        if row.SCH_GRADE_G05 == 'Yes':
+            grade_range.append(5)
+        if row.SCH_GRADE_G04 == 'Yes':
+            grade_range.append(4)
+        if row.SCH_GRADE_G03 == 'Yes':
+            grade_range.append(3)
+        if row.SCH_GRADE_G02 == 'Yes':
+            grade_range.append(2)
+        if row.SCH_GRADE_G01 == 'Yes':
+            grade_range.append(1)
+        if row.SCH_GRADE_KG == 'Yes':
+            grade_range.append('kg')
+        if row.SCH_GRADE_PS == 'Yes':
+            grade_range.append('pk')
+
+        if grade_range == [12,11,10,9,8,7,6,5,4,3,2,1,'kg','pk']:
+            df_grade_range.append('pk-12')
+        elif grade_range == [12,11,10,9,8,7,6,5,4,3,2,1,'kg']:
+            df_grade_range.append('kg-12')
+        elif grade_range == [12,11,10,9,8,7,6,5]:
+            df_grade_range.append('05-12')
+        elif grade_range == [12,11,10,9,8,7,6]:
+            df_grade_range.append('06-12')
+        elif grade_range == [12,11,10,9,8,7]:
+            df_grade_range.append('07-12')
+        elif grade_range == [12,11,10,9,8]:
+            df_grade_range.append('08-12')
+        elif grade_range == [12,11,10,9]:
+            df_grade_range.append('09-12')
+        elif grade_range == [11,10,9]:
+            df_grade_range.append('09-11')
+        elif grade_range == [10,9]:
+            df_grade_range.append('09-10')
+        elif grade_range == [12,11,10]:
+            df_grade_range.append('10-12')
+        elif grade_range == [12,11]:
+            df_grade_range.append('11-12')
+        elif grade_range == [9]:
+            df_grade_range.append('9-only')
+        elif grade_range == [10]:
+            df_grade_range.append('10-only')
+        elif grade_range == [11]:
+            df_grade_range.append('11-only')
+        elif grade_range == [12]:
+            df_grade_range.append('12-only')
+        else:
+            df_grade_range.append('other')
+    return pd.DataFrame(df_grade_range, columns=['grade_range'])
+
+def have_gr9_or_younger(df):
+    """Calculates the number of schools in a given DataFrame (df) offer grades of 8th or younger (i.e. non-high school grades)"""
+    count = 0
+    for index, row in df.iterrows():
+        if row.SCH_GRADE_G08 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_G07 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_G06 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_G05 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_G04 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_G03 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_G02 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_G01 == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_KG == 'Yes':
+            count += 1
+        elif row.SCH_GRADE_PS == 'Yes':
+            count += 1
+    return round(count / len(df),3)
