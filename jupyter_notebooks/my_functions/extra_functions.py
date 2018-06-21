@@ -210,10 +210,10 @@ def flag_grouper(dataset, groupby_col, ap_or_de, keep_index=False):
 
     flag_group['# of HS Schools'] = (flag_group['Yes'] + flag_group['No'])
     flag_group[ap_or_de + ' Offering Rate'] = round(flag_group['Yes'] / (flag_group['Yes'] + flag_group['No']) * 100, 1)
-    flag_group = flag_group.rename({'Yes': '# of ' + ap_or_de +  ' Schools'}, axis=1)
+    flag_group = flag_group.rename({'Yes': '# Schools Offering ' + ap_or_de }, axis=1)
     flag_group = flag_group.drop(['No'], axis = 1)
 
-    order = [groupby_col, '# of HS Schools', '# of ' + ap_or_de +  ' Schools', ap_or_de + ' Offering Rate']
+    order = [groupby_col, '# of HS Schools', '# Schools Offering ' + ap_or_de, ap_or_de + ' Offering Rate']
 
     if keep_index:
         return flag_group[order]
