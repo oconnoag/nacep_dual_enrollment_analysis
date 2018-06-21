@@ -134,61 +134,61 @@ def de_ap_enrollments(de_only, ap_only, neither, both, groupby_field=False):
         down by a specific field (if specified) """
 
     if groupby_field != False:
-        de_only_field = de_only.groupby(groupby_field)['hs_total_enrollment'].sum().rename('DE_Only_hs_students')
-        ap_only_field = ap_only.groupby(groupby_field)['hs_total_enrollment'].sum().rename('AP_Only_hs_students')
-        neither_AP_DE_field = neither.groupby(groupby_field)['hs_total_enrollment'].sum().rename('Neither_AP_DE_hs_students')
-        both_AP_DE_field = both.groupby(groupby_field)['hs_total_enrollment'].sum().rename('Both_AP_DE_hs_students')
+        de_only_field = de_only.groupby(groupby_field)['hs_total_enrollment'].sum().rename('HS Students in DE-Only Schools')
+        ap_only_field = ap_only.groupby(groupby_field)['hs_total_enrollment'].sum().rename('HS Students in AP-Only Schools')
+        neither_AP_DE_field = neither.groupby(groupby_field)['hs_total_enrollment'].sum().rename('HS Students in Schools w/ Neither')
+        both_AP_DE_field = both.groupby(groupby_field)['hs_total_enrollment'].sum().rename('HS Students in Schools w/ Both')
 
         combined = pd.concat([de_only_field, ap_only_field,
                               neither_AP_DE_field, both_AP_DE_field], axis = 1).fillna(0).astype(int)
 
-        combined['Total'] = combined['DE_Only_hs_students'] + combined['AP_Only_hs_students'] \
-                            + combined['Neither_AP_DE_hs_students'] + combined['Both_AP_DE_hs_students']
+        combined['Total'] = combined['HS Students in DE-Only Schools'] + combined['HS Students in AP-Only Schools'] \
+                            + combined['HS Students in Schools w/ Neither'] + combined['HS Students in Schools w/ Both']
 
-        combined['DE_Only %'] = round(combined['DE_Only_hs_students'] / combined['Total'] * 100, 1)
-        combined['AP_Only %'] = round(combined['AP_Only_hs_students'] / combined['Total'] * 100, 1)
-        combined['Neither_AP_DE %'] = round(combined['Neither_AP_DE_hs_students'] / combined['Total'] * 100, 1)
-        combined['Both_AP_DE %'] = round(combined['Both_AP_DE_hs_students'] / combined['Total'] * 100, 1)
+        combined['% DE-Only Schools'] = round(combined['HS Students in DE-Only Schools'] / combined['Total'] * 100, 1)
+        combined['% AP-Only Schools'] = round(combined['HS Students in AP-Only Schools'] / combined['Total'] * 100, 1)
+        combined['% Neither Schools'] = round(combined['HS Students in Schools w/ Neither'] / combined['Total'] * 100, 1)
+        combined['% Both Schools'] = round(combined['HS Students in Schools w/ Both'] / combined['Total'] * 100, 1)
 
-        order = ['DE_Only_hs_students', 'DE_Only %', 'AP_Only_hs_students', 'AP_Only %',
-                 'Neither_AP_DE_hs_students', 'Neither_AP_DE %', 'Both_AP_DE_hs_students', 'Both_AP_DE %', 'Total']
+        order = ['HS Students in DE-Only Schools', '% DE-Only Schools', 'HS Students in AP-Only Schools', '% AP-Only Schools',
+                 'HS Students in Schools w/ Neither', '% Neither Schools', 'HS Students in Schools w/ Both', '% Both Schools', 'Total']
 
         return combined[order]
     else:
-        de_only_field = de_only['hs_total_enrollment'].sum()#.rename('DE_Only_hs_students')
-        ap_only_field = ap_only['hs_total_enrollment'].sum()#.rename('AP_Only_hs_students')
-        neither_AP_DE_field = neither['hs_total_enrollment'].sum()#.rename('Neither_AP_DE_hs_students')
-        both_AP_DE_field = both['hs_total_enrollment'].sum()#.rename('Both_AP_DE_hs_students')
+        de_only_field = de_only['hs_total_enrollment'].sum()#.rename('HS Students in DE-Only Schools')
+        ap_only_field = ap_only['hs_total_enrollment'].sum()#.rename('HS Students in DE-Only Schools')
+        neither_AP_DE_field = neither['hs_total_enrollment'].sum()#.rename('HS Students in DE-Only Schools')
+        both_AP_DE_field = both['hs_total_enrollment'].sum()#.rename('HS Students in Schools w/ Both')
 
-        combined = pd.DataFrame({'DE_Only_hs_students': de_only_field,
-                                 'AP_Only_hs_students': ap_only_field,
-                                 'Neither_AP_DE_hs_students': neither_AP_DE_field,
-                                 'Both_AP_DE_hs_students': both_AP_DE_field},
+        combined = pd.DataFrame({'HS Students in DE-Only Schools': de_only_field,
+                                 'HS Students in AP-Only Schools': ap_only_field,
+                                 'HS Students in Schools w/ Neither': neither_AP_DE_field,
+                                 'HS Students in Schools w/ Both': both_AP_DE_field},
                                index = ['HS Enrollments'])
 
-        combined['Total'] = combined['DE_Only_hs_students'] + combined['AP_Only_hs_students'] \
-                            + combined['Neither_AP_DE_hs_students'] + combined['Both_AP_DE_hs_students']
+        combined['Total'] = combined['HS Students in DE-Only Schools'] + combined['HS Students in AP-Only Schools'] \
+                            + combined['HS Students in Schools w/ Neither'] + combined['HS Students in Schools w/ Both']
 
-        combined['DE_Only %'] = round(combined['DE_Only_hs_students'] / combined['Total'] * 100, 1)
-        combined['AP_Only %'] = round(combined['AP_Only_hs_students'] / combined['Total'] * 100, 1)
-        combined['Neither_AP_DE %'] = round(combined['Neither_AP_DE_hs_students'] / combined['Total'] * 100, 1)
-        combined['Both_AP_DE %'] = round(combined['Both_AP_DE_hs_students'] / combined['Total'] * 100, 1)
+        combined['% DE-Only Schools'] = round(combined['HS Students in DE-Only Schools'] / combined['Total'] * 100, 1)
+        combined['% AP-Only Schools'] = round(combined['HS Students in AP-Only Schools'] / combined['Total'] * 100, 1)
+        combined['% Neither Schools'] = round(combined['HS Students in Schools w/ Neither'] / combined['Total'] * 100, 1)
+        combined['% Both Schools'] = round(combined['HS Students in Schools w/ Both'] / combined['Total'] * 100, 1)
 
-        order = ['DE_Only_hs_students', 'DE_Only %', 'AP_Only_hs_students', 'AP_Only %',
-                 'Neither_AP_DE_hs_students', 'Neither_AP_DE %', 'Both_AP_DE_hs_students', 'Both_AP_DE %', 'Total']
+        order = ['HS Students in DE-Only Schools', '% DE-Only Schools', 'HS Students in AP-Only Schools', '% AP-Only Schools',
+                 'HS Students in Schools w/ Neither', '% Neither Schools', 'HS Students in Schools w/ Both', '% Both Schools', 'Total']
 
         return combined[order]
 
 def add_de_ap_pcts(df_input):
-    """ Adds a percentage breakdown of all the columns (DE_Only, AP_Only, etc.) in the inputted DataFrame (df) """
+    """ Adds a percentage breakdown of all the columns (DE Only, AP Only, etc.) in the inputted DataFrame (df) """
     df = df_input.copy()
-    df['DE_Only %'] = round(df['DE_Only'] / df['Total'] * 100, 1)
-    df['AP_Only %'] = round(df['AP_Only'] / df['Total'] * 100, 1)
-    df['Neither_AP_DE %'] = round(df['Neither_AP_DE'] / df['Total'] * 100, 1)
-    df['Both_AP_DE %'] = round(df['Both_AP_DE'] / df['Total'] * 100, 1)
+    df['% DE-Only Schools in Group'] = round(df['DE Only'] / df['Total'] * 100, 1)
+    df['% AP-Only Schools in Group'] = round(df['AP Only'] / df['Total'] * 100, 1)
+    df['% Neither Schools in Group'] = round(df['Neither AP DE'] / df['Total'] * 100, 1)
+    df['% Both Schools in Group'] = round(df['Both AP DE'] / df['Total'] * 100, 1)
 
-    order = ['DE_Only', 'DE_Only %', 'AP_Only', 'AP_Only %',
-             'Neither_AP_DE', 'Neither_AP_DE %', 'Both_AP_DE', 'Both_AP_DE %', 'Total']
+    order = ['DE Only', '% DE-Only Schools in Group', 'AP Only', '% AP-Only Schools in Group',
+             'Neither AP DE', '% Neither Schools in Group', 'Both AP DE', '% Both Schools in Group', 'Total']
 
     return df[order]
 
