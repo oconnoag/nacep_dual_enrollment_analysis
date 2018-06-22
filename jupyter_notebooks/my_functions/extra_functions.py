@@ -16,6 +16,14 @@ def students_in_11_or_12(g11, g12):
         return 'Yes'
     return 'No'
 
+def missing_value_mapper(value):
+    """Used with an applymap() function on an entire DataFrame.
+       Converts any negative number into 0, as these negative numbers represent missing/null values"""
+    if isinstance(value, int):
+        if value < 0:
+            return 0
+    return value
+
 def hs_enrollment_averager(df):
     """Provides a work-around for figuring out the number of high school students in a school that offers grades 8th
         or lower.  Scales the total enrollment of each school by the ratio of high school grades offered : total grades
@@ -68,6 +76,40 @@ def hs_enrollment_averager(df):
 
         hs_enrollment_list.append(hs_enrollment)
     return hs_enrollment_list
+
+def add_enrollment_columns(df):
+    """Used in the Initial Filtration File to sum up the enrollments - Requires functions hs_enrollment_averager and
+        missing_value_mapper from the extra_functions module.
+
+        Inputs a DataFrame (df)
+
+        Returns a copy of that DataFrame (df_copy) with the summed DE Enrollment, AP Enrollment, Total Enrollment,
+        and High School Enrollment.
+    """
+    df_copy = df.copy()
+    df_copy = df_copy.applymap(missing_value_mapper)
+    df_copy['de_total'] = df_copy['TOT_DUALENR_M'] + df_copy['TOT_DUALENR_F']
+    df_copy['ap_total'] = df_copy['TOT_APENR_M'] + df_copy['TOT_APENR_F']
+    df_copy['total_enrollment'] = df_copy['TOT_ENR_M'] + df_copy['TOT_ENR_F']
+    df_copy['hs_total'] = hs_enrollment_averager(df_copy)
+
+    return df_copy
+
+def enrollment_summary(df, phrase):
+    """Used in conjunction with the add_enrollment_columns function in the extra_funcitons module to make DataFrames
+        containing #Schools, DE Enrollment, AP Enrollment, and HS Enrollment.
+
+        Inputs a DataFrame (df), and String (phrase) that will become the index term for the DataFrame.
+
+        Returns a DataFrame containing the summed enrollment values."""
+    df_copy = df.copy()
+    num_schools = len(df_copy)
+    hs_students = df_copy['hs_total'].sum()
+    de_students = df_copy['de_total'].sum()
+    ap_students = df_copy['ap_total'].sum()
+
+    return pd.DataFrame({phrase: [num_schools, hs_students, de_students, ap_students]},
+                index = ['Number of Schools', 'High Students', 'DE Students', 'AP Students']).T
 
 def school_sizer(enroll):
     """ Takes in the total (high school -- see the hs_enrollment_averager
@@ -219,13 +261,6 @@ def flag_grouper(dataset, groupby_col, ap_or_de, keep_index=False):
         return flag_group[order]
     return flag_group[order[1:]]
 
-def missing_value_mapper(value):
-    """Converts any negative number into 0, as these negative numbers represent missing/null values"""
-    if isinstance(value, int):
-        if value < 0:
-            return 0
-    return value
-
 def school_grade_range(df):
     """Calculates the number of schools in a given DataFrame (df) of a particular distribution of grades:
         Example:  If a school (in df) offers grades 9,10,11,12 exclusively, they are placed in the '9-12'
@@ -322,3 +357,159 @@ def have_gr9_or_younger(df):
         elif row.SCH_GRADE_PS == 'Yes':
             count += 1
     return round(count / len(df),3)
+
+def enrollment_compiler(dataset, groupby_col):
+    """Used in the Enrollment Analyses Files to create DataFrames with the exact structures (can only be used for
+        group attributes of a school (not students -- see the enrollment_compiler_layerer function))
+
+        Inputs a DataFrame (dataset) and a Column in the DataFrame to perform a groupby() (groupby_col)
+
+        Returns a Fully compiled DataFrame"""
+    # These are used for calculating Ratios, Gaps, and Participation Rates
+    hs_total = dataset['hs_total_enrollment'].sum()
+    de_total = dataset['de_total_enrollment'].sum()
+    ap_total = dataset['ap_total_enrollment'].sum()
+    hs_breakdown_totals = dataset.groupby(groupby_col)['hs_total_enrollment'].sum()
+
+    # Used to substantiate the DataFrame
+    hs_total_enrolls = dataset.groupby(groupby_col)['hs_total_enrollment'].sum().rename('HS Students') # Based on the Averager Function
+    hs_pcts = round(hs_total_enrolls / hs_total * 100, 1).rename('%Total HS Students')
+
+    de_total_enrolls = dataset.groupby(groupby_col)['de_total_enrollment'].sum().rename('DE Students')
+    de_pcts = round(de_total_enrolls / de_total * 100, 1).rename('%Total DE Students')
+    de_gap = (de_pcts - hs_pcts).rename('DE Gap')
+    de_participation = round(de_total_enrolls / hs_breakdown_totals * 100, 1).rename('DE Participation Rate')
+
+    ap_total_enrolls = dataset.groupby(groupby_col)['ap_total_enrollment'].sum().rename('AP Students')
+    ap_pcts = round(ap_total_enrolls / ap_total * 100, 1).rename('%Total AP Students')
+    ap_gap = (ap_pcts - hs_pcts).rename('AP Gap')
+    ap_participation = round(ap_total_enrolls / hs_breakdown_totals * 100, 1).rename('AP Participation Rate')
+
+    return pd.concat([hs_total_enrolls, hs_pcts, de_total_enrolls, de_pcts, de_gap, de_participation,
+                      ap_total_enrolls, ap_pcts, ap_gap, ap_participation], axis = 1)
+
+def enrollment_compiler_layerer(dataset, hs_col, de_col, ap_col, row_name):
+    """Used in the Enrollment Analyses Files to create DataFrames with the exact structures (can only be used for
+        student attributes of a school (not students -- see the enrollment_compiler function)) -- this function
+        can only handle one 'row at a time', and the compiled DataFrame needs to be created using the
+        pd.Concat() function.
+
+        Inputs a DataFrame (dataset), a High School Enrollment column (hs_col),
+            a DE Enrollment column (de_col), an AP Enrollment column (ap_col), and
+            the string name of a row that is used for the index (row_name)
+
+        Returns a one-rowed DataFrame"""
+    # These are used for calculating Ratios, Gaps, and Participation Rates
+    hs_total = dataset['hs_total_enrollment'].sum()
+    de_total = dataset['de_total_enrollment'].sum()
+    ap_total = dataset['ap_total_enrollment'].sum()
+
+    # Used to substantiate the DataFrame
+    hs_total_enrolls = dataset[hs_col].sum() # Based on the Averager Function
+    hs_pcts = round(hs_total_enrolls / hs_total * 100, 1)
+
+    de_total_enrolls = dataset[de_col].sum()
+    de_pcts = round(de_total_enrolls / de_total * 100, 1)
+    de_gap = (de_pcts - hs_pcts)
+    de_participation = round(de_total_enrolls / hs_total_enrolls * 100, 1)
+
+    ap_total_enrolls = dataset[ap_col].sum()
+    ap_pcts = round(ap_total_enrolls / ap_total * 100, 1)
+    ap_gap = (ap_pcts - hs_pcts)
+    ap_participation = round(ap_total_enrolls / hs_total_enrolls * 100, 1)
+
+    order = ['HS Students','%Total HS Students', 'DE Students', '%Total DE Students', 'DE Gap','DE Participation Rate',
+             'AP Students', '%Total AP Students', 'AP Gap', 'AP Participation Rate']
+    return pd.DataFrame({'HS Students': [hs_total_enrolls],
+                  '%Total HS Students': [hs_pcts],
+                  'DE Students': [de_total_enrolls],
+                  '%Total DE Students': [de_pcts],
+                  'DE Gap': [de_gap],
+                  'DE Participation Rate': [de_participation],
+                  'AP Students': [ap_total_enrolls],
+                  '%Total AP Students': [ap_pcts],
+                  'AP Gap': [ap_gap],
+                  'AP Participation Rate': [ap_participation]},
+                 index = [row_name])[order]
+
+def by_offering_enrollment_compiler(de_yes, ap_yes, groupby_col):
+    """Used in the "By Offering" Enrollment Analyses Files to create DataFrames with the exact structures (can only be used for
+        group attributes of a school (not students -- see the enrollment_compiler_layerer function))
+
+        Inputs a DataFrame (dataset) and a Column in the DataFrame to perform a groupby() (groupby_col)
+
+        Returns a Fully compiled DataFrame"""
+    # These are used for calculating Ratios, Gaps, and Participation Rates
+    deYes_hs_total = de_yes['hs_total_enrollment'].sum()
+    apYes_hs_total = ap_yes['hs_total_enrollment'].sum()
+    de_total = de_yes['de_total_enrollment'].sum()
+    ap_total = ap_yes['ap_total_enrollment'].sum()
+
+    deYes_hs_breakdown_totals = de_yes.groupby(groupby_col)['hs_total_enrollment'].sum()
+    apYes_hs_breakdown_totals = ap_yes.groupby(groupby_col)['hs_total_enrollment'].sum()
+
+    # Used to substantiate the DataFrame
+    deYes_hs_enroll = de_yes.groupby(groupby_col)['hs_total_enrollment'].sum().rename('HS Students in DE Offering') # Based on the Averager Function
+    deYes_hs_pct = round(deYes_hs_enroll / deYes_hs_total * 100, 1).rename('%HS Students in DE Offering')
+    de_total_enrolls = de_yes.groupby(groupby_col)['de_total_enrollment'].sum().rename('DE Students')
+    de_pcts = round(de_total_enrolls / de_total * 100, 1).rename('%Total DE Students')
+    de_gap = (de_pcts - deYes_hs_pct).rename('DE Gap')
+    de_participation = round(de_total_enrolls / deYes_hs_breakdown_totals * 100, 1).rename('DE Participation Rate')
+
+    apYes_hs_enroll = ap_yes.groupby(groupby_col)['hs_total_enrollment'].sum().rename('HS Students in AP Offering') # Based on the Averager Function
+    apYes_hs_pct = round(apYes_hs_enroll / apYes_hs_total * 100, 1).rename('%HS Students in AP Offering')
+    ap_total_enrolls = ap_yes.groupby(groupby_col)['ap_total_enrollment'].sum().rename('AP Students')
+    ap_pcts = round(ap_total_enrolls / ap_total * 100, 1).rename('%Total AP Students')
+    ap_gap = (ap_pcts - apYes_hs_pct).rename('AP Gap')
+    ap_participation = round(ap_total_enrolls / apYes_hs_breakdown_totals * 100, 1).rename('AP Participation Rate')
+
+    return pd.concat([deYes_hs_enroll, deYes_hs_pct, de_total_enrolls, de_pcts, de_gap, de_participation,
+                      apYes_hs_enroll, apYes_hs_pct, ap_total_enrolls, ap_pcts, ap_gap, ap_participation], axis = 1)
+
+def by_offering_enrollment_compiler_layerer(de_yes, ap_yes, hs_col, de_col, ap_col, row_name):
+    """Used in the Enrollment Analyses Files to create DataFrames with the exact structures (can only be used for
+        student attributes of a school (not students -- see the enrollment_compiler function)) -- this function
+        can only handle one 'row at a time', and the compiled DataFrame needs to be created using the
+        pd.Concat() function.
+
+        Inputs a DataFrame (dataset), a High School Enrollment column (hs_col),
+            a DE Enrollment column (de_col), an AP Enrollment column (ap_col), and
+            the string name of a row that is used for the index (row_name)
+
+        Returns a one-rowed DataFrame"""
+    # These are used for calculating Ratios, Gaps, and Participation Rates
+    deYes_hs_total = de_yes['hs_total_enrollment'].sum()
+    apYes_hs_total = ap_yes['hs_total_enrollment'].sum()
+    de_total = de_yes['de_total_enrollment'].sum()
+    ap_total = ap_yes['ap_total_enrollment'].sum()
+
+    # Used to substantiate the DataFrame
+    deYes_hs_enrolls = de_yes[hs_col].sum() # Based on the Averager Function
+    deYes_hs_pcts = round(deYes_hs_enrolls / deYes_hs_total * 100, 1)
+    de_total_enrolls = de_yes[de_col].sum()
+    de_pcts = round(de_total_enrolls / de_total * 100, 1)
+    de_gap = (de_pcts - deYes_hs_pcts)
+    de_participation = round(de_total_enrolls / deYes_hs_enrolls * 100, 1)
+
+    apYes_hs_enrolls = ap_yes[hs_col].sum() # Based on the Averager Function
+    apYes_hs_pcts = round(apYes_hs_enrolls / apYes_hs_total * 100, 1)
+    ap_total_enrolls = ap_yes[ap_col].sum()
+    ap_pcts = round(ap_total_enrolls / ap_total * 100, 1)
+    ap_gap = (ap_pcts - apYes_hs_pcts)
+    ap_participation = round(ap_total_enrolls / apYes_hs_enrolls * 100, 1)
+
+    order = ['HS Students in DE Offering','%HS Students in DE Offering', 'DE Students', '%Total DE Students', 'DE Gap','DE Participation Rate',
+             'HS Students in AP Offering','%HS Students in AP Offering', 'AP Students', '%Total AP Students', 'AP Gap', 'AP Participation Rate']
+    return pd.DataFrame({'HS Students in DE Offering': [deYes_hs_enrolls],
+                  '%HS Students in DE Offering': [deYes_hs_pcts],
+                  'DE Students': [de_total_enrolls],
+                  '%Total DE Students': [de_pcts],
+                  'DE Gap': [de_gap],
+                  'DE Participation Rate': [de_participation],
+                  'HS Students in AP Offering': [apYes_hs_enrolls],
+                  '%HS Students in AP Offering': [apYes_hs_pcts],
+                  'AP Students': [ap_total_enrolls],
+                  '%Total AP Students': [ap_pcts],
+                  'AP Gap': [ap_gap],
+                  'AP Participation Rate': [ap_participation]},
+                 index = [row_name])[order]
