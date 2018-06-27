@@ -149,6 +149,58 @@ def region_mapper(state):
     else:
         return "Messed Up"
 
+def region_mapper_nacep(state):
+    """ Takes in the 'state' column from a DataFrame and assigns the
+        school to the according region containing that state.
+
+        Uses the NACEP-defined Categories for the state assignments.
+        """
+
+    if state in "NY,NJ,PA,DE,MD,DC,CT,ME,MA,NH,RI,VT,VA".split(','):
+        return "1"
+    elif state in "MI,IN,OH,WV,KY,TN,NC,SC,AL,MS,GA,FL".split(','):
+        return "2"
+    elif state in "IL,MO,AR,LA,OK,KS,TX".split(','):
+        return "3"
+    elif state in "MT,ID,WY,ND,SD,NE,IA,MN,WI".split(','):
+        return "4"
+    elif state in "OR,WA,CA,NV,UT,AZ,CO,NM,AK,HI".split(','):
+        return "5"
+    else:
+        return "Messed Up"
+
+def region_mapper_census(state):
+    """ Takes in the 'state' column from a DataFrame and assigns the
+        school to the according region containing that state.
+
+        Uses the census-defined Categories for the state assignments.
+        """
+    # Northeast
+    if state in "CT,ME,MA,NH,RI,VT".split(','):
+        return "New England"
+    elif state in "NY,PA,NJ,".split(','):
+        return "Middle Atlantic"
+    # South
+    elif state in "DE,MD,DC,VA,WV,NC,SC,GA,FL".split(','):
+        return "South Atlantic"
+    elif state in "KY,TN,AL,MS".split(','):
+        return "East South Central"
+    elif state in "AR,LA,OK,TX".split(','):
+        return "West South Central"
+    # Midwest
+    elif state in 'MI,OH,IN,IL,WI'.split(','):
+        return 'East North Central'
+    elif state in 'MO,IA,MN,ND,SD,NE,KS'.split(','):
+        return 'West North Central'
+    # West
+    elif state in 'MT,ID,WY,CO,UT,AZ,NM,NV'.split(','):
+        return 'Mountain'
+    elif state in 'WA,OR,CA,HI,AK'.split(','):
+        return 'Pacific'
+
+    else:
+        return "Messed Up"
+
 def eth_grouper(pct):
     """ Takes in the percent ethnicity of a school and returns a 'Eth Group'
         according to that percent.
