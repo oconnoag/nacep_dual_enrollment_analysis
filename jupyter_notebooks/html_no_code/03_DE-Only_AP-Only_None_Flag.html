@@ -11794,7 +11794,13 @@ div#notebook {
 - By State
     - Schools
     - Enrollments
-- By Region
+- By Region (Accreditation)
+    - Schools
+    - Enrollments
+- By Region (Census)
+    - Schools
+    - Enrollments
+- By Region (NACEP)
     - Schools
     - Enrollments
 </code></pre>
@@ -13004,7 +13010,7 @@ $( document ).ready(code_toggle);
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">by_eth</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">hs_de_only_eth</span><span class="p">,</span> <span class="n">hs_AP_Only_eth</span><span class="p">,</span> <span class="n">hs_Neither_AP_DE_eth</span><span class="p">,</span> <span class="n">hs_Both_AP_DE_eth</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
@@ -13026,7 +13032,7 @@ $( document ).ready(code_toggle);
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[33]:</div>
+<div class="prompt output_prompt">Out[23]:</div>
 
 
 
@@ -14720,7 +14726,7 @@ $( document ).ready(code_toggle);
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="By-Region">By Region<a class="anchor-link" href="#By-Region">&#182;</a></h1>
+<h1 id="By-Region-(Accreditation)">By Region (Accreditation)<a class="anchor-link" href="#By-Region-(Accreditation)">&#182;</a></h1>
 <pre><code>- Regions are broken down according to the regional accreditation guidelines.
 
     - Higher Learning Commission (HLC): Arkansas, Arizona, Colorado, Iowa, Illinois, Indiana, Kansas, Michigan,
@@ -14960,7 +14966,10 @@ $( document ).ready(code_toggle);
 <div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">de_ap_enrollments</span><span class="p">(</span><span class="n">hs_de_only</span><span class="p">,</span> <span class="n">hs_AP_Only</span><span class="p">,</span> <span class="n">hs_Neither_AP_DE</span><span class="p">,</span> <span class="n">hs_Both_AP_DE</span><span class="p">,</span> <span class="n">groupby_field</span> <span class="o">=</span> <span class="s1">&#39;region_accred&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">region_enrollments</span> <span class="o">=</span> <span class="n">de_ap_enrollments</span><span class="p">(</span><span class="n">hs_de_only</span><span class="p">,</span> <span class="n">hs_AP_Only</span><span class="p">,</span> <span class="n">hs_Neither_AP_DE</span><span class="p">,</span>
+                                       <span class="n">hs_Both_AP_DE</span><span class="p">,</span> <span class="n">groupby_field</span> <span class="o">=</span> <span class="s1">&#39;region_accred&#39;</span><span class="p">)</span>
+<span class="n">region_enrollments</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Region&#39;</span>
+<span class="n">region_enrollments</span>
 </pre></div>
 
 </div>
@@ -15007,7 +15016,7 @@ $( document ).ready(code_toggle);
       <th>Total</th>
     </tr>
     <tr>
-      <th>region_accred</th>
+      <th>Region</th>
       <th></th>
       <th></th>
       <th></th>
@@ -15091,6 +15100,816 @@ $( document ).ready(code_toggle);
       <td>657213</td>
       <td>36.6</td>
       <td>1793867</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="By-Region-(Census)">By Region (Census)<a class="anchor-link" href="#By-Region-(Census)">&#182;</a></h1>
+<pre><code>- Regions are broken down according to the regional accreditation guidelines.
+
+    - New England - Connecticut, Maine, Massachusetts, New Hampshire, Rhode Island, and Vermont
+    - Mid-Atlantic - New Jersey, New York, and Pennsylvania
+    - East North Central - Illinois, Indiana, Michigan, Ohio, and Wisconsin
+    - West North Central - Iowa, Kansas, Minnesota, Missouri, Nebraska, North Dakota, and South Dakota
+    - South Atlantic - Delaware, Florida, Georgia, Maryland, North Carolina, South Carolina, 
+      Virginia, District of Columbia, and West Virginia
+    - East South Central - Alabama, Kentucky, Mississippi, and Tennessee
+    - West South Central - Arkansas, Louisiana, Oklahoma, and Texas
+    - Mountain - Arizona, Colorado, Idaho, Montana, Nevada, New Mexico, Utah, and Wyoming
+    - Pacific - Alaska, California, Hawaii, Oregon, and Washington</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Set up the Region Column&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">my_functions.extra_functions</span> <span class="k">import</span> <span class="n">region_mapper_census</span>
+<span class="n">hs_de_only</span><span class="p">[</span><span class="s1">&#39;region_census&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_de_only</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_census</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">hs_AP_Only</span><span class="p">[</span><span class="s1">&#39;region_census&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_AP_Only</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_census</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">hs_Neither_AP_DE</span><span class="p">[</span><span class="s1">&#39;region_census&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_Neither_AP_DE</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_census</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">hs_Both_AP_DE</span><span class="p">[</span><span class="s1">&#39;region_census&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_Both_AP_DE</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_census</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Set up Grouped DataFrames&quot;&quot;&quot;</span>
+<span class="n">hs_de_only_region_census</span> <span class="o">=</span> <span class="n">hs_de_only</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_census&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_de_only_region_census</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;DE Only&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+
+<span class="n">hs_AP_Only_region_census</span> <span class="o">=</span> <span class="n">hs_AP_Only</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_census&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_AP_Only_region_census</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;AP Only&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+
+<span class="n">hs_Neither_AP_DE_region_census</span> <span class="o">=</span> <span class="n">hs_Neither_AP_DE</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_census&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_Neither_AP_DE_region_census</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Neither AP DE&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+
+<span class="n">hs_Both_AP_DE_region_census</span> <span class="o">=</span> <span class="n">hs_Both_AP_DE</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_census&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_Both_AP_DE_region_census</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Both AP DE&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="---Schools">-- Schools<a class="anchor-link" href="#---Schools">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">by_region_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">hs_de_only_region_census</span><span class="p">,</span> <span class="n">hs_AP_Only_region_census</span><span class="p">,</span> <span class="n">hs_Neither_AP_DE_region_census</span><span class="p">,</span> <span class="n">hs_Both_AP_DE_region_census</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">by_region_census</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">by_region_census</span><span class="p">[</span><span class="s1">&#39;DE Only&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">by_region_census</span><span class="p">[</span><span class="s1">&#39;AP Only&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">by_region_census</span><span class="p">[</span><span class="s1">&#39;Both AP DE&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">by_region_census</span><span class="p">[</span><span class="s1">&#39;Neither AP DE&#39;</span><span class="p">]</span>
+
+<span class="n">by_region_census</span> <span class="o">=</span> <span class="n">add_de_ap_pcts</span><span class="p">(</span><span class="n">by_region_census</span><span class="p">)</span>
+<span class="n">by_region_census</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Region&#39;</span><span class="p">]</span>
+<span class="n">by_region_census</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[34]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DE Only</th>
+      <th>% DE-Only Schools in Group</th>
+      <th>AP Only</th>
+      <th>% AP-Only Schools in Group</th>
+      <th>Neither AP DE</th>
+      <th>% Neither Schools in Group</th>
+      <th>Both AP DE</th>
+      <th>% Both Schools in Group</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>East North Central</th>
+      <td>648</td>
+      <td>20.9</td>
+      <td>307</td>
+      <td>9.9</td>
+      <td>342</td>
+      <td>11.0</td>
+      <td>1805</td>
+      <td>58.2</td>
+      <td>3102</td>
+    </tr>
+    <tr>
+      <th>East South Central</th>
+      <td>294</td>
+      <td>24.5</td>
+      <td>110</td>
+      <td>9.2</td>
+      <td>115</td>
+      <td>9.6</td>
+      <td>683</td>
+      <td>56.8</td>
+      <td>1202</td>
+    </tr>
+    <tr>
+      <th>Middle Atlantic</th>
+      <td>187</td>
+      <td>8.1</td>
+      <td>819</td>
+      <td>35.5</td>
+      <td>245</td>
+      <td>10.6</td>
+      <td>1057</td>
+      <td>45.8</td>
+      <td>2308</td>
+    </tr>
+    <tr>
+      <th>Mountain</th>
+      <td>442</td>
+      <td>27.7</td>
+      <td>212</td>
+      <td>13.3</td>
+      <td>304</td>
+      <td>19.0</td>
+      <td>639</td>
+      <td>40.0</td>
+      <td>1597</td>
+    </tr>
+    <tr>
+      <th>New England</th>
+      <td>79</td>
+      <td>8.9</td>
+      <td>311</td>
+      <td>35.1</td>
+      <td>69</td>
+      <td>7.8</td>
+      <td>427</td>
+      <td>48.2</td>
+      <td>886</td>
+    </tr>
+    <tr>
+      <th>Pacific</th>
+      <td>294</td>
+      <td>12.4</td>
+      <td>879</td>
+      <td>37.0</td>
+      <td>434</td>
+      <td>18.3</td>
+      <td>769</td>
+      <td>32.4</td>
+      <td>2376</td>
+    </tr>
+    <tr>
+      <th>South Atlantic</th>
+      <td>228</td>
+      <td>9.2</td>
+      <td>299</td>
+      <td>12.1</td>
+      <td>117</td>
+      <td>4.7</td>
+      <td>1836</td>
+      <td>74.0</td>
+      <td>2480</td>
+    </tr>
+    <tr>
+      <th>West North Central</th>
+      <td>1117</td>
+      <td>50.5</td>
+      <td>92</td>
+      <td>4.2</td>
+      <td>256</td>
+      <td>11.6</td>
+      <td>748</td>
+      <td>33.8</td>
+      <td>2213</td>
+    </tr>
+    <tr>
+      <th>West South Central</th>
+      <td>586</td>
+      <td>23.3</td>
+      <td>272</td>
+      <td>10.8</td>
+      <td>163</td>
+      <td>6.5</td>
+      <td>1499</td>
+      <td>59.5</td>
+      <td>2520</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="---Enrollments">-- Enrollments<a class="anchor-link" href="#---Enrollments">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">region_enrollments_census</span> <span class="o">=</span> <span class="n">de_ap_enrollments</span><span class="p">(</span><span class="n">hs_de_only</span><span class="p">,</span> <span class="n">hs_AP_Only</span><span class="p">,</span> <span class="n">hs_Neither_AP_DE</span><span class="p">,</span> 
+                                              <span class="n">hs_Both_AP_DE</span><span class="p">,</span> <span class="n">groupby_field</span> <span class="o">=</span> <span class="s1">&#39;region_census&#39;</span><span class="p">)</span>
+<span class="n">region_enrollments_census</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Region&#39;</span>
+<span class="n">region_enrollments_census</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[35]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HS Students in DE-Only Schools</th>
+      <th>% DE-Only Schools</th>
+      <th>HS Students in AP-Only Schools</th>
+      <th>% AP-Only Schools</th>
+      <th>HS Students in Schools w/ Neither</th>
+      <th>% Neither Schools</th>
+      <th>HS Students in Schools w/ Both</th>
+      <th>% Both Schools</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>East North Central</th>
+      <td>193941</td>
+      <td>9.4</td>
+      <td>223567</td>
+      <td>10.8</td>
+      <td>80358</td>
+      <td>3.9</td>
+      <td>1564881</td>
+      <td>75.9</td>
+      <td>2062747</td>
+    </tr>
+    <tr>
+      <th>East South Central</th>
+      <td>110226</td>
+      <td>13.4</td>
+      <td>77659</td>
+      <td>9.5</td>
+      <td>27503</td>
+      <td>3.3</td>
+      <td>606029</td>
+      <td>73.8</td>
+      <td>821417</td>
+    </tr>
+    <tr>
+      <th>Middle Atlantic</th>
+      <td>65841</td>
+      <td>3.8</td>
+      <td>611526</td>
+      <td>35.7</td>
+      <td>76074</td>
+      <td>4.4</td>
+      <td>959238</td>
+      <td>56.0</td>
+      <td>1712679</td>
+    </tr>
+    <tr>
+      <th>Mountain</th>
+      <td>84201</td>
+      <td>7.9</td>
+      <td>231267</td>
+      <td>21.7</td>
+      <td>46777</td>
+      <td>4.4</td>
+      <td>702833</td>
+      <td>66.0</td>
+      <td>1065078</td>
+    </tr>
+    <tr>
+      <th>New England</th>
+      <td>31856</td>
+      <td>5.2</td>
+      <td>251997</td>
+      <td>40.9</td>
+      <td>15701</td>
+      <td>2.5</td>
+      <td>316730</td>
+      <td>51.4</td>
+      <td>616284</td>
+    </tr>
+    <tr>
+      <th>Pacific</th>
+      <td>77932</td>
+      <td>3.4</td>
+      <td>1161102</td>
+      <td>50.7</td>
+      <td>73785</td>
+      <td>3.2</td>
+      <td>979142</td>
+      <td>42.7</td>
+      <td>2291961</td>
+    </tr>
+    <tr>
+      <th>South Atlantic</th>
+      <td>75328</td>
+      <td>2.8</td>
+      <td>273237</td>
+      <td>10.2</td>
+      <td>24961</td>
+      <td>0.9</td>
+      <td>2303771</td>
+      <td>86.0</td>
+      <td>2677297</td>
+    </tr>
+    <tr>
+      <th>West North Central</th>
+      <td>216517</td>
+      <td>23.1</td>
+      <td>85747</td>
+      <td>9.1</td>
+      <td>38062</td>
+      <td>4.1</td>
+      <td>597611</td>
+      <td>63.7</td>
+      <td>937937</td>
+    </tr>
+    <tr>
+      <th>West South Central</th>
+      <td>109479</td>
+      <td>5.8</td>
+      <td>163174</td>
+      <td>8.6</td>
+      <td>28688</td>
+      <td>1.5</td>
+      <td>1589928</td>
+      <td>84.1</td>
+      <td>1891269</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="By-Region-(NACEP)">By Region (NACEP)<a class="anchor-link" href="#By-Region-(NACEP)">&#182;</a></h1>
+<pre><code>- Regions are broken down according to the regional accreditation guidelines.
+    - 1 - New York, New Jersey, Pennslyvania, Delware, Maryland, Washington DC, Connecticut, Maine,
+          Massachusettes, New Hampshire, Rhode Island, Vermont, Virginia
+    - 2 - Michigan, Indiana, Ohio, West Virigina, Kentukcy, Tennessee, North Carolina, South Carolina,
+          Alabama, Mississippi, Georgia, Florida
+    - 3 - Illinois, Missouri, Arkansas, Louisiana, Oklahoma, Kansas, Texas
+    - 4 - Montana, Idaho, Wyoming, North Dakota, South Dakota, Nebraska, Iowa, Minnesota, Wisconsin
+    - 5 - Oregan, Washington, California, Nevada, Utah, Arizona, Colorado, New Mexico, Alaska, Hawaii</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Set up the Region Column&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">my_functions.extra_functions</span> <span class="k">import</span> <span class="n">region_mapper_nacep</span>
+<span class="n">hs_de_only</span><span class="p">[</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_de_only</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_nacep</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">hs_AP_Only</span><span class="p">[</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_AP_Only</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_nacep</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">hs_Neither_AP_DE</span><span class="p">[</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_Neither_AP_DE</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_nacep</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">hs_Both_AP_DE</span><span class="p">[</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hs_Both_AP_DE</span><span class="p">[</span><span class="s1">&#39;LEA_STATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">region_mapper_nacep</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;Set up Grouped DataFrames&quot;&quot;&quot;</span>
+<span class="n">hs_de_only_region_nacep</span> <span class="o">=</span> <span class="n">hs_de_only</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_de_only_region_nacep</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;DE Only&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+
+<span class="n">hs_AP_Only_region_nacep</span> <span class="o">=</span> <span class="n">hs_AP_Only</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_AP_Only_region_nacep</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;AP Only&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+
+<span class="n">hs_Neither_AP_DE_region_nacep</span> <span class="o">=</span> <span class="n">hs_Neither_AP_DE</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_Neither_AP_DE_region_nacep</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Neither AP DE&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+
+<span class="n">hs_Both_AP_DE_region_nacep</span> <span class="o">=</span> <span class="n">hs_Both_AP_DE</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;region_nacep&#39;</span><span class="p">)[</span><span class="s1">&#39;LEAID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">hs_Both_AP_DE_region_nacep</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">&#39;Both AP DE&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="---Schools">-- Schools<a class="anchor-link" href="#---Schools">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">by_region_nacep</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">hs_de_only_region_nacep</span><span class="p">,</span> <span class="n">hs_AP_Only_region_nacep</span><span class="p">,</span> <span class="n">hs_Neither_AP_DE_region_nacep</span><span class="p">,</span> <span class="n">hs_Both_AP_DE_region_nacep</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">by_region_nacep</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">by_region_nacep</span><span class="p">[</span><span class="s1">&#39;DE Only&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">by_region_nacep</span><span class="p">[</span><span class="s1">&#39;AP Only&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">by_region_nacep</span><span class="p">[</span><span class="s1">&#39;Both AP DE&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">by_region_nacep</span><span class="p">[</span><span class="s1">&#39;Neither AP DE&#39;</span><span class="p">]</span>
+
+<span class="n">by_region_nacep</span> <span class="o">=</span> <span class="n">add_de_ap_pcts</span><span class="p">(</span><span class="n">by_region_nacep</span><span class="p">)</span>
+<span class="n">by_region_nacep</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Region&#39;</span><span class="p">]</span>
+<span class="n">by_region_nacep</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[38]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DE Only</th>
+      <th>% DE-Only Schools in Group</th>
+      <th>AP Only</th>
+      <th>% AP-Only Schools in Group</th>
+      <th>Neither AP DE</th>
+      <th>% Neither Schools in Group</th>
+      <th>Both AP DE</th>
+      <th>% Both Schools in Group</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>295</td>
+      <td>7.8</td>
+      <td>1221</td>
+      <td>32.1</td>
+      <td>332</td>
+      <td>8.7</td>
+      <td>1950</td>
+      <td>51.3</td>
+      <td>3798</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>919</td>
+      <td>18.3</td>
+      <td>459</td>
+      <td>9.1</td>
+      <td>461</td>
+      <td>9.2</td>
+      <td>3189</td>
+      <td>63.4</td>
+      <td>5028</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1246</td>
+      <td>30.6</td>
+      <td>411</td>
+      <td>10.1</td>
+      <td>296</td>
+      <td>7.3</td>
+      <td>2118</td>
+      <td>52.0</td>
+      <td>4071</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>831</td>
+      <td>37.6</td>
+      <td>147</td>
+      <td>6.7</td>
+      <td>296</td>
+      <td>13.4</td>
+      <td>936</td>
+      <td>42.4</td>
+      <td>2210</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>584</td>
+      <td>16.3</td>
+      <td>1063</td>
+      <td>29.7</td>
+      <td>660</td>
+      <td>18.5</td>
+      <td>1270</td>
+      <td>35.5</td>
+      <td>3577</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="---Enrollments">-- Enrollments<a class="anchor-link" href="#---Enrollments">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">region_enrollments_nacep</span> <span class="o">=</span> <span class="n">de_ap_enrollments</span><span class="p">(</span><span class="n">hs_de_only</span><span class="p">,</span> <span class="n">hs_AP_Only</span><span class="p">,</span> <span class="n">hs_Neither_AP_DE</span><span class="p">,</span> 
+                                              <span class="n">hs_Both_AP_DE</span><span class="p">,</span> <span class="n">groupby_field</span> <span class="o">=</span> <span class="s1">&#39;region_nacep&#39;</span><span class="p">)</span>
+<span class="n">region_enrollments_nacep</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Region&#39;</span>
+<span class="n">region_enrollments_nacep</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[39]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HS Students in DE-Only Schools</th>
+      <th>% DE-Only Schools</th>
+      <th>HS Students in AP-Only Schools</th>
+      <th>% AP-Only Schools</th>
+      <th>HS Students in Schools w/ Neither</th>
+      <th>% Neither Schools</th>
+      <th>HS Students in Schools w/ Both</th>
+      <th>% Both Schools</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>111763</td>
+      <td>3.7</td>
+      <td>951003</td>
+      <td>31.6</td>
+      <td>97300</td>
+      <td>3.2</td>
+      <td>1847869</td>
+      <td>61.4</td>
+      <td>3007935</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>305885</td>
+      <td>7.6</td>
+      <td>353571</td>
+      <td>8.7</td>
+      <td>112123</td>
+      <td>2.8</td>
+      <td>3274103</td>
+      <td>80.9</td>
+      <td>4045682</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>261808</td>
+      <td>9.1</td>
+      <td>303396</td>
+      <td>10.5</td>
+      <td>53820</td>
+      <td>1.9</td>
+      <td>2263469</td>
+      <td>78.5</td>
+      <td>2882493</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>153105</td>
+      <td>16.6</td>
+      <td>87041</td>
+      <td>9.4</td>
+      <td>35815</td>
+      <td>3.9</td>
+      <td>648341</td>
+      <td>70.1</td>
+      <td>924302</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>132760</td>
+      <td>4.1</td>
+      <td>1384265</td>
+      <td>43.0</td>
+      <td>112851</td>
+      <td>3.5</td>
+      <td>1586381</td>
+      <td>49.3</td>
+      <td>3216257</td>
     </tr>
   </tbody>
 </table>
